@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\MunOneFilter;
+use App\Http\Filters\SourceFilter;
 use App\Http\Requests\MunOneRequest;
 use App\Http\Resources\MunOneResource;
 use App\Models\MunOne;
@@ -19,9 +20,16 @@ class MunOneController extends Controller
     public function index(MunOneRequest $request)
     {
         $data=$request->validated();
-        $filter=app()->make(MunOneFilter::class,['queryParams'=>array_filter($data)]);
-        $mun_one=SourceRules::filter($filter)->get();
-        return $filter;
+        if(isset($data['province'])){
+            $data=$request->validated();
+            $filter=app()->make(MunOneFilter::class,['queryParams'=>array_filter($data)]);
+            $mun_one=SourceRules::select('l1_id')->filter($filter)->groupBy('l1_id')->get();
+
+        }
+        else{
+            $mun_one=MunOne::all();
+        }
+        return MunOneResource::collection($mun_one);
     }
 
     /**

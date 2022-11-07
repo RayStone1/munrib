@@ -11043,7 +11043,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nh1{\n    font-weight: 300;\n    font-size: 96px;\n    line-height: 120%;\n}\nh2{\n    font-weight: 300;\n    font-size: 60px;\n    line-height: 120%;\n}\nh3{\n    font-weight: 400;\n    font-size: 48px;\n    line-height: 120%;\n}\nh4{\n    font-weight: 400;\n    font-size: 34px;\n    line-height: 120%;\n}\nh5{\n    font-weight: 400;\n    font-size: 24px;\n    line-height: 120%;\n}\nh6{\n    font-weight: 500;\n    font-size: 20px;\n    line-height: 120%;\n}\n.v-button.v-size--default{\n    font-weight: 500;\n    font-size: 18px;\n    line-height: 120%;\n}\n.v-button.v-size--large{\n    font-weight: 500;\n    font-size: 15px;\n    line-height: 120%;\n}\n.v-button.v-size--small{\n    font-weight: 500;\n    font-size: 14px;\n    line-height: 120%;\n}\n.v-button.v-size--x-large{\n    font-weight: 500;\n    font-size: 17px;\n    line-height: 120%;\n}\ninput{\n    font-weight: 400;\n    font-size: 16px;\n    line-height: 120%;\n}\n.base--text{\n    color: #0055A3;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nh1{\r\n    font-weight: 300;\r\n    font-size: 96px;\r\n    line-height: 120%;\n}\nh2{\r\n    font-weight: 300;\r\n    font-size: 60px;\r\n    line-height: 120%;\n}\nh3{\r\n    font-weight: 400;\r\n    font-size: 48px;\r\n    line-height: 120%;\n}\nh4{\r\n    font-weight: 400;\r\n    font-size: 34px;\r\n    line-height: 120%;\n}\nh5{\r\n    font-weight: 400;\r\n    font-size: 24px;\r\n    line-height: 120%;\n}\nh6{\r\n    font-weight: 500;\r\n    font-size: 20px;\r\n    line-height: 120%;\n}\n.v-button.v-size--default{\r\n    font-weight: 500;\r\n    font-size: 18px;\r\n    line-height: 120%;\n}\n.v-button.v-size--large{\r\n    font-weight: 500;\r\n    font-size: 15px;\r\n    line-height: 120%;\n}\n.v-button.v-size--small{\r\n    font-weight: 500;\r\n    font-size: 14px;\r\n    line-height: 120%;\n}\n.v-button.v-size--x-large{\r\n    font-weight: 500;\r\n    font-size: 17px;\r\n    line-height: 120%;\n}\ninput{\r\n    font-weight: 400;\r\n    font-size: 16px;\r\n    line-height: 120%;\n}\n.base--text{\r\n    color: #0055A3;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11067,7 +11067,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.base--text[data-v-0851419a]{\n    color:#0055A3;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.base--text[data-v-0851419a]{\r\n    color:#0055A3;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11091,7 +11091,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.border-y[data-v-28665937]{\n    border-top: 1px solid black;\n    border-bottom: 1px solid black;\n}\n.border-left-clear[data-v-28665937]{\n    border-top: 1px solid black;\n    border-bottom: 1px solid black;\n    border-right: 1px solid black;\n}\n.border-right-clear[data-v-28665937]{\n    border-top: 1px solid black;\n    border-bottom: 1px solid black;\n    border-left: 1px solid black;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.border-y[data-v-28665937]{\r\n    border-top: 1px solid black;\r\n    border-bottom: 1px solid black;\n}\n.border-left-clear[data-v-28665937]{\r\n    border-top: 1px solid black;\r\n    border-bottom: 1px solid black;\r\n    border-right: 1px solid black;\n}\n.border-right-clear[data-v-28665937]{\r\n    border-top: 1px solid black;\r\n    border-bottom: 1px solid black;\r\n    border-left: 1px solid black;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
