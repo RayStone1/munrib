@@ -116,7 +116,6 @@
                     x-large
                     color="primary"
                     @click.prevent="getSources"
-                    :disabled=SearchButtom
                 >
                     <v-icon left>
                         mdi-magnify

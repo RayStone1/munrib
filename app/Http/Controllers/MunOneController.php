@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\MunOneFilter;
+use App\Http\Requests\MunOneRequest;
 use App\Http\Resources\MunOneResource;
 use App\Models\MunOne;
+use App\Models\SourceRules;
 use Illuminate\Http\Request;
 
 class MunOneController extends Controller
@@ -13,10 +16,12 @@ class MunOneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MunOneRequest $request)
     {
-        $mun_one=MunOne::all();
-        return MunOneResource::collection($mun_one);
+        $data=$request->validated();
+        $filter=app()->make(MunOneFilter::class,['queryParams'=>array_filter($data)]);
+        $mun_one=SourceRules::filter($filter)->get();
+        return $filter;
     }
 
     /**

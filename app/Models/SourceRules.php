@@ -30,7 +30,7 @@ class SourceRules extends Model
         return $this->belongsTo(Name::class,'name_id','id');
     }
 
-    public function Source()
+    public function source()
     {
         return $this->belongsTo(Source::class,'source_id','id');
     }

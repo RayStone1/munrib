@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\SourceFilter;
-use App\Http\Requests\SourceRulesRequest;
+use App\Http\Requests\SourceRequest;
 use App\Http\Resources\SearchSourceResource;
-use App\Http\Resources\SourceRulesResource;
-use App\Models\Source;
 use App\Models\SourceRules;
 use Illuminate\Http\Request;
 
@@ -17,7 +15,7 @@ class SourceRulesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(SourceRulesRequest $request)
+    public function index(SourceRequest $request)
     {
         $data=$request->validated();
         $filter=app()->make(SourceFilter::class,['queryParams'=>array_filter($data)]);

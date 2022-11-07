@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SourceRulesRequest extends FormRequest
+class MunOneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,6 @@ class SourceRulesRequest extends FormRequest
     {
         return [
             'province'=>'integer|nullable',
-            'mun_one'=>'integer|nullable',
-            'mun_two'=>'integer|nullable',
-            'name'=>'integer|nullable',
         ];
     }
 }

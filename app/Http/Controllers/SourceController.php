@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\SourceFilter;
+use App\Http\Requests\SourceRequest;
+use App\Http\Resources\SearchSourceResource;
 use App\Http\Resources\SourceResource;
 use App\Http\Resources\SourcesResources;
 use App\Models\Source;
+use App\Models\SourceRules;
 use Illuminate\Http\Request;
 
 class SourceController extends Controller
@@ -14,9 +18,12 @@ class SourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SourceRequest $request)
     {
-        $sources=Source::all();
+        $data=$request->validated();
+        $filter=app()->make(SourceFilter::class,['queryParams'=>array_filter($data)]);
+        return $data;
+        $sources=SourceRules::filter($filter)->get();
         return SourceResource::collection($sources);
     }
 

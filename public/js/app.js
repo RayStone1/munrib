@@ -5578,7 +5578,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SearchForm",
@@ -29594,11 +29593,7 @@ var render = function () {
               _c(
                 "v-btn",
                 {
-                  attrs: {
-                    "x-large": "",
-                    color: "primary",
-                    disabled: _vm.SearchButtom,
-                  },
+                  attrs: { "x-large": "", color: "primary" },
                   on: {
                     click: function ($event) {
                       $event.preventDefault()

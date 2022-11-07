@@ -42,6 +42,3 @@ Route::group(['prefix'=>'province'],function (){
     Route::get('/',[\App\Http\Controllers\ProvinceController::class,'index']);
     Route::get('/{province}',[\App\Http\Controllers\ProvinceController::class,'show']);
 });
-Route::group(['prefix'=>'search'],function (){
-    Route::post('/',[\App\Http\Controllers\SourceRulesController::class,'index']);
-});
