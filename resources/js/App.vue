@@ -8,7 +8,6 @@
 
 
 <script>
-import appHeader from "./components/AppHeader";
 
 export default {
     data() {
@@ -18,7 +17,7 @@ export default {
     },
 
     components: {
-        appHeader
+        appHeader: ()=>import("./components/AppHeader")
     },
 
     methods: {

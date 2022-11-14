@@ -11,22 +11,19 @@
 
             </div>
         </v-container>
-
+        <add-button/>
     </v-main>
 
 
 </template>
 
 <script>
-import cardSource from "../components/CardSource";
-import lineSource from "../components/LineSource";
-import SearchForm from "../components/SearchForm";
 export default {
     name: "Main",
     components:{
-        cardSource,
-        SearchForm,
-        lineSource
+        SearchForm:()=>import('../components/SearchForm'),
+        lineSource:()=>import('../components/LineSource'),
+        addButton:()=>import('../components/AddButton')
 
     }
 }
