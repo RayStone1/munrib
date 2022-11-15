@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Filters\MunOneFilter;
-use App\Http\Filters\SourceFilter;
 use App\Http\Requests\MunOneRequest;
 use App\Http\Resources\MunOneResource;
 use App\Models\MunOne;
@@ -20,11 +20,9 @@ class MunOneController extends Controller
     public function index(MunOneRequest $request)
     {
         $data=$request->validated();
-        if(isset($data['province'])){
-            $data=$request->validated();
+        if(isset($data['province'])){;
             $filter=app()->make(MunOneFilter::class,['queryParams'=>array_filter($data)]);
-            $mun_one=SourceRules::select('l1_id')->filter($filter)->groupBy('l1_id')->get();
-
+            $mun_one=SourceRules::filter($filter)->get();
         }
         else{
             $mun_one=MunOne::all();
@@ -39,7 +37,7 @@ class MunOneController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -48,9 +46,12 @@ class MunOneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MunOneRequest $request)
     {
-        //
+        $result=MunOne::firstOrCreate([
+            'name'=>$request->name
+        ]);
+        return $result;
     }
 
     /**

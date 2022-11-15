@@ -5625,7 +5625,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getSearchData: function getSearchData() {
       this.getProvince();
-      this.getMunOne();
+      // this.getMunOne();
       this.getMunTwo();
       this.getNames();
     },
@@ -11091,7 +11091,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.border-y[data-v-28665937]{\r\n    border-top: 1px solid black;\r\n    border-bottom: 1px solid black;\n}\n.border-left-clear[data-v-28665937]{\r\n    border-top: 1px solid black;\r\n    border-bottom: 1px solid black;\r\n    border-right: 1px solid black;\n}\n.border-right-clear[data-v-28665937]{\r\n    border-top: 1px solid black;\r\n    border-bottom: 1px solid black;\r\n    border-left: 1px solid black;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.border-y[data-v-28665937]{\n    border-top: 1px solid black;\n    border-bottom: 1px solid black;\n}\n.border-left-clear[data-v-28665937]{\n    border-top: 1px solid black;\n    border-bottom: 1px solid black;\n    border-right: 1px solid black;\n}\n.border-right-clear[data-v-28665937]{\n    border-top: 1px solid black;\n    border-bottom: 1px solid black;\n    border-left: 1px solid black;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29424,7 +29424,6 @@ var render = function () {
       on: {
         submit: function ($event) {
           $event.preventDefault()
-          return _vm.submit.apply(null, arguments)
         },
       },
     },
@@ -91391,7 +91390,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_pages_Test_vue":1,"resources_js_pages_Login_vue":1,"resources_js_pages_Main_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_pages_Test_vue":1,"resources_js_pages_Login_vue":1,"resources_js_pages_Main_vue":1,"resources_js_components_Forms_SubjectModal_vue":1,"resources_js_components_Forms_SourceModal_vue":1,"resources_js_components_Forms_SynonymForm_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

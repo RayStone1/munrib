@@ -10,6 +10,7 @@ class MunOne extends Model
 {
     protected $table="fs_mun_l1";
     public $timestamps=false;
+    protected $guarded=false;
     public function synonyms()
     {
         return $this->hasMany(MunOneSyn::class,'l1_id','id');

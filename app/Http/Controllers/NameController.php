@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NameRequest;
 use App\Http\Resources\NameResource;
 use App\Models\Name;
 use Illuminate\Http\Request;
@@ -35,9 +36,12 @@ class NameController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NameRequest $request)
     {
-        //
+        $result=Name::firstOrCreate([
+            'name'=>$request->name
+        ]);
+        return $result;
     }
 
     /**

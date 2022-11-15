@@ -19,7 +19,7 @@ class SourceRules extends Model
     }
     public function mun_one()
     {
-        return $this->belongsTo(MunOne::class,'l1_id','id');
+        return $this->belongsTo(MunOne::class,'source_id','id');
     }
     public function mun_two()
     {

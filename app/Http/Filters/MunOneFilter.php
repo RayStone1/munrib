@@ -2,7 +2,7 @@
 
 namespace App\Http\Filters;
 
-<<<<<<< HEAD
+
 use Illuminate\Database\Eloquent\Builder;
 
 class MunOneFilter extends AbstractFilter
@@ -18,9 +18,5 @@ class MunOneFilter extends AbstractFilter
     public function province(Builder $builder,$value){
         $builder->where('province_id',$value);
     }
-=======
-class MunOneFilter
-{
 
->>>>>>> bedcd6e (deУ)
 }

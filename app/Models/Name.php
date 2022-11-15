@@ -9,6 +9,7 @@ class Name extends Model
 {
     protected $table="fs_names";
     public $timestamps=false;
+    protected $guarded=false;
 
     public function synonyms()
     {

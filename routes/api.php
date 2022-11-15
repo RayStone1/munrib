@@ -29,10 +29,12 @@ Route::group(['prefix'=>'source'],function (){
 Route::group(['prefix'=>'mun-one'],function (){
     Route::get('/',[\App\Http\Controllers\MunOneController::class,'index']);
     Route::get('/{mun_one}',[\App\Http\Controllers\MunOneController::class,'show']);
+    Route::post('/create',[\App\Http\Controllers\MunOneController::class,'store']);
 });
 Route::group(['prefix'=>'mun-two'],function (){
     Route::get('/',[\App\Http\Controllers\MunTwoController::class,'index']);
     Route::get('/{mun_two}',[\App\Http\Controllers\MunTwoController::class,'show']);
+    Route::post('/create',[\App\Http\Controllers\MunTwoController::class,'store']);
 });
 Route::group(['prefix'=>'names'],function (){
     Route::get('/',[\App\Http\Controllers\NameController::class,'index']);
@@ -41,4 +43,5 @@ Route::group(['prefix'=>'names'],function (){
 Route::group(['prefix'=>'province'],function (){
     Route::get('/',[\App\Http\Controllers\ProvinceController::class,'index']);
     Route::get('/{province}',[\App\Http\Controllers\ProvinceController::class,'show']);
+    Route::post('/create',[\App\Http\Controllers\ProvinceController::class,'store']);
 });

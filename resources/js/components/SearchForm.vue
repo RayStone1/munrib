@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submit" class="">
+    <form @submit.prevent="" class="">
         <v-row
             align="center"
             justify="space-around"
@@ -175,7 +175,7 @@ export default {
         },
         getSearchData(){
             this.getProvince();
-            this.getMunOne();
+            // this.getMunOne();
             this.getMunTwo();
             this.getNames();
         },

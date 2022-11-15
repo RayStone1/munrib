@@ -9,4 +9,5 @@ class Province extends Model
 {
     protected $table="fs_province";
     public $timestamps=false;
+    protected $guarded=false;
 }

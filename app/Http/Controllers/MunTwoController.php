@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MunTwoRequest;
 use App\Http\Resources\MunTwoResource;
 use App\Models\MunTwo;
 use Illuminate\Http\Request;
@@ -35,9 +36,12 @@ class MunTwoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MunTwoRequest $request)
     {
-        //
+        $result=MunTwo::firstOrCreate([
+            'name'=>$request->name
+        ]);
+        return $result;
     }
 
     /**

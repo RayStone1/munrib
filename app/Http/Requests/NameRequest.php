@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MunOneRequest extends FormRequest
+class NameRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class MunOneRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required||unique:fs_mun_l1'
+            'name'=>'required||unique:fs_names'
         ];
     }
     public function messages()

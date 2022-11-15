@@ -9,6 +9,9 @@ class MunTwo extends Model
 {
     protected $table="fs_mun_l2";
     public $timestamps=false;
+    protected $guarded=false;
+
+
     public function synonyms()
     {
         return $this->hasMany(MunTwoSyn::class,'l2_id','id');
