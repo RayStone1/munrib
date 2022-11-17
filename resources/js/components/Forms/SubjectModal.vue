@@ -22,7 +22,7 @@
                     <v-btn
                         color="blue darken-1"
                         text
-                        @click="dialog_subject = false"
+                        @click="sub_dialog = false"
                     >
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
@@ -35,16 +35,18 @@
                                     outlined
                                     :items="types_item"
                                     item-text="text"
-                                    item-value="url"
+                                    item-value="id"
                                     label="Тип субъекта"
-                                    v-model="type_subject"
+                                    v-model="subject.type"
                                 ></v-autocomplete>
                             </v-col>
                             <v-col cols="12">
                                 <v-text-field
+                                    :error="error"
+                                    :error-messages="error_message"
                                     label="Название субъекта"
                                     outlined
-                                    v-model="name_subject"
+                                    v-model="subject.name"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -55,7 +57,7 @@
                     <v-btn
                         color="blue darken-1"
                         text
-                        @click="addSubject(type_subject)"
+                        @click="addSubject()"
                     >
                         Добавить
                     </v-btn>
@@ -70,16 +72,43 @@ export default {
     name: "SubjectModal",
     data:()=>({
         sub_dialog:false,
-        type_subject:null,
-        name_subject:null,
+        subject:{
+          type:null,
+          name:null
+        },
         types_item:[
-            {url:"/mun-one",text:"Муниципальные образования 1ого уровня"},
-            {url:"/mun-two",text:"Муниципальные образования 2ого уровня"},
-            {url:"/name",text:"Орган власти"},
+            {id:2,text:"Муниципальные образования 1ого уровня"},
+            {id:3,text:"Муниципальные образования 2ого уровня"},
+            {id:4,text:"Орган власти"},
         ],
+        error:false,
+        error_message:[],
     }),
     methods:{
+        addSubject(){
+            axios.post(`api/${this.typeSubject(this.subject.type)}`,{"name":this.subject.name})
+                .then(res=>{
+                    this.subject.name=null
+                    this.subject.type=null
+                })
+                .catch(error=>{
 
+                })
+
+        },
+        typeSubject(id){
+            switch (id) {
+                case 2:
+                    return "mun-one"
+                    break
+                case 3:
+                    return "mun-two"
+                    break
+                case 4:
+                    return "names"
+                    break
+            }
+        }
     },
 }
 </script>

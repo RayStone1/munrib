@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\MunTwoFilter;
 use App\Http\Requests\MunTwoRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\MunTwoResource;
 use App\Models\MunTwo;
+use App\Models\SourceRules;
 use Illuminate\Http\Request;
 
 class MunTwoController extends Controller
@@ -14,9 +17,17 @@ class MunTwoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SearchRequest $request)
     {
-        $mun_two=MunTwo::all();
+        $data=$request->validated();
+        if($data){
+            $filter=app()->make(MunTwoFilter::class,['queryParams'=>array_filter($data)]);
+            $mun_two_id=SourceRules::select('l2_id')->filter($filter)->groupBy('l2_id')->get();
+            $mun_two=MunTwo::find($mun_two_id);
+        }
+        else{
+            $mun_two=MunTwo::all();
+        }
         return MunTwoResource::collection($mun_two);
     }
 
@@ -38,9 +49,8 @@ class MunTwoController extends Controller
      */
     public function store(MunTwoRequest $request)
     {
-        $result=MunTwo::firstOrCreate([
-            'name'=>$request->name
-        ]);
+        $data=$request->validated();
+        $result=MunTwo::firstOrCreate($data);
         return $result;
     }
 

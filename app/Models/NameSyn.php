@@ -9,4 +9,5 @@ class NameSyn extends Model
 {
     protected $table="fs_names_syn";
     public $timestamps=false;
+    protected $guarded=[];
 }

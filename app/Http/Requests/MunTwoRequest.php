@@ -24,7 +24,7 @@ class MunTwoRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required||unique:fs_mun_l2'
+            'name'=>'required|unique:fs_mun_l2'
         ];
     }
     public function messages()

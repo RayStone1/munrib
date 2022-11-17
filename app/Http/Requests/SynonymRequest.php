@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MunOneRequest extends FormRequest
+class SynonymRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,8 @@ class MunOneRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:fs_mun_l1'
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'unique' => 'Такой субъект уже существует',
+            'name'=>'required',
+            'minD'=>'nullable'
         ];
     }
 }

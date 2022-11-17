@@ -78,13 +78,87 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SynonymForm",
   data: function data() {
     return {
-      synonym_dialog: false
+      synonym_dialog: false,
+      types_item: [{
+        id: 2,
+        text: "Муниципальные образования 1ого уровня"
+      }, {
+        id: 3,
+        text: "Муниципальные образования 2ого уровня"
+      }, {
+        id: 4,
+        text: "Орган власти"
+      }],
+      type_subject: null,
+      subjects: null,
+      synonym: {
+        parent: null,
+        name: null
+      },
+      loading: false
     };
+  },
+  methods: {
+    typeSubject: function typeSubject(id) {
+      switch (id) {
+        case 2:
+          return "mun-one";
+          break;
+        case 3:
+          return "mun-two";
+          break;
+        case 4:
+          return "names";
+          break;
+      }
+    },
+    getSubject: function getSubject() {
+      var _this = this;
+      this.loading = true;
+      axios.get("api/".concat(this.typeSubject(this.type_subject))).then(function (res) {
+        _this.subjects = res.data.data;
+        _this.loading = false;
+      });
+    },
+    sendSynonym: function sendSynonym() {
+      var _this2 = this;
+      axios.post("api/".concat(this.typeSubject(this.type_subject), "/").concat(this.synonym.parent, "/synonym"), {
+        name: this.synonym.name
+      }).then(function (res) {
+        _this2.synonym.name = null;
+        _this2.synonym.parent = null;
+        _this2.type_subject = null;
+        console.log(res);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
   }
 });
 
@@ -219,11 +293,31 @@ var render = function () {
           _c(
             "v-card",
             [
-              _c("v-card-title", [
-                _c("span", { staticClass: "text-h5" }, [
-                  _vm._v("Добавить новый синоним"),
-                ]),
-              ]),
+              _c(
+                "v-card-title",
+                [
+                  _c("span", { staticClass: "text-h5" }, [
+                    _vm._v("Добавить новый синоним"),
+                  ]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: {
+                        click: function ($event) {
+                          _vm.synonym_dialog = false
+                        },
+                      },
+                    },
+                    [_c("v-icon", [_vm._v("mdi-close")])],
+                    1
+                  ),
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-card-text",
@@ -240,9 +334,19 @@ var render = function () {
                             [
                               _c("v-select", {
                                 attrs: {
-                                  items: ["0-17", "18-29", "30-54", "54+"],
+                                  items: _vm.types_item,
+                                  "item-value": "id",
                                   label: "Тип субъекта",
                                   required: "",
+                                  outlined: "",
+                                },
+                                on: { change: _vm.getSubject },
+                                model: {
+                                  value: _vm.type_subject,
+                                  callback: function ($$v) {
+                                    _vm.type_subject = $$v
+                                  },
+                                  expression: "type_subject",
                                 },
                               }),
                             ],
@@ -253,11 +357,42 @@ var render = function () {
                             "v-col",
                             { attrs: { cols: "12" } },
                             [
-                              _c("v-select", {
+                              _c("v-autocomplete", {
                                 attrs: {
-                                  items: ["0-17", "18-29", "30-54", "54+"],
-                                  label: "Тип субъекта",
+                                  label: "Субъект",
+                                  "no-data-text": "Выберете тип субъекта",
+                                  loading: _vm.loading,
+                                  disabled: _vm.loading,
+                                  items: _vm.subjects,
+                                  "item-text": "name",
+                                  "item-value": "id",
+                                  outlined: "",
                                   required: "",
+                                },
+                                model: {
+                                  value: _vm.synonym.parent,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.synonym, "parent", $$v)
+                                  },
+                                  expression: "synonym.parent",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { outlined: "", label: "Синоним" },
+                                model: {
+                                  value: _vm.synonym.name,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.synonym, "name", $$v)
+                                  },
+                                  expression: "synonym.name",
                                 },
                               }),
                             ],
@@ -282,24 +417,7 @@ var render = function () {
                     "v-btn",
                     {
                       attrs: { color: "blue darken-1", text: "" },
-                      on: {
-                        click: function ($event) {
-                          _vm.synonym_dialog = false
-                        },
-                      },
-                    },
-                    [_vm._v("\n                    Закрыть\n                ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "blue darken-1", text: "" },
-                      on: {
-                        click: function ($event) {
-                          _vm.synonym_dialog = false
-                        },
-                      },
+                      on: { click: _vm.sendSynonym },
                     },
                     [
                       _vm._v(

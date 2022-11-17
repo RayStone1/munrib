@@ -28,6 +28,8 @@
                                 hide-details
                                 auto-select-first
                                 rounded
+                                clearable
+                                @change="getSearchData"
                                 v-model="filterData.province"
                                 :items="province_item"
                                 item-text="name"
@@ -48,6 +50,8 @@
                                 class="py-3"
                                 hide-details
                                 auto-select-first
+                                @change="getSearchData"
+                                clearable
                                 v-model="filterData.mun_one"
                                 :items="mun_one_item"
                                 item-text="name"
@@ -70,9 +74,10 @@
                             <v-autocomplete
                                 class="py-3"
                                 hide-details
-
+                                clearable
                                 auto-select-first
                                 rounded
+                                @change="getSearchData"
                                 v-model="filterData.mun_two"
                                 :items="mun_two_item"
                                 item-text="name"
@@ -96,6 +101,8 @@
                                 hide-details
                                 auto-select-first
                                 rounded
+                                clearable
+                                @change="getSearchData"
                                 v-model="filterData.name"
                                 :items="names_item"
                                 item-text="name"
@@ -143,6 +150,8 @@ export default {
             mun_one_item:null,
             mun_two_item:null,
             names_item:null,
+            sources:null,
+            loading:false,
         }
     },
     mounted() {
@@ -150,40 +159,65 @@ export default {
     },
     methods:{
         getProvince(){
+            this.loading=true
             axios.get("api/province")
                 .then(res=>{
                     this.province_item=res.data.data
+                    this.loading=false
                 })
         },
         getMunOne(){
-            axios.get("api/mun-one")
+            this.loading=true
+            axios.get("api/mun-one",{params:{
+                    "province":this.filterData.province,
+                    "name":this.filterData.name,
+                }})
                 .then(res=>{
                     this.mun_one_item=res.data.data
+                    this.loading=false
                 })
         },
         getMunTwo(){
-            axios.get("api/mun-two")
+            this.loading=true
+            axios.get("api/mun-two",{params:{
+                    "mun_one":this.filterData.mun_one,
+                    "province":this.filterData.province,
+                    "name":this.filterData.name,
+                }})
                 .then(res=>{
                     this.mun_two_item=res.data.data
+                    this.loading=false
                 })
         },
         getNames(){
-            axios.get("api/names")
+            this.loading=true
+            axios.get("api/names",{params:{
+                    "province":this.filterData.province,
+                    "mun_one":this.filterData.mun_one,
+                    "mun_two":this.filterData.mun_two,
+                }})
                 .then(res=>{
                     this.names_item=res.data.data
+                    this.loading=false
                 })
         },
         getSearchData(){
             this.getProvince();
-            // this.getMunOne();
+            this.getMunOne();
             this.getMunTwo();
             this.getNames();
         },
         getSources(){
-            axios.post('api/search',this.filterData)
-                .then(res=>{
-                    console.log(res);
-                })
+            this.$router.push({
+                path:`search`,
+                params:{
+                    name:"asd"
+                    // "province":this.filterData.province,
+                    // "mun_one":this.filterData.mun_one,
+                    // "mun_two":this.filterData.mun_two,
+                    // "name":this.filterData.name,
+                }
+            });
         }
     }
 }

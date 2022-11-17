@@ -1,11 +1,10 @@
 <template>
         <div>
-
             <v-menu
                 offset-x
                 left
                 rounded="lg"
-
+                :nudge-left=7
             >
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn

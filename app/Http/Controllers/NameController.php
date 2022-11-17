@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\NameFilter;
 use App\Http\Requests\NameRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\NameResource;
 use App\Models\Name;
+use App\Models\SourceRules;
 use Illuminate\Http\Request;
 
 class NameController extends Controller
@@ -14,9 +17,17 @@ class NameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SearchRequest $request)
     {
-        $names=Name::all();
+        $data=$request->validated();
+        if($data){
+            $filter=app()->make(NameFilter::class,['queryParams'=>array_filter($data)]);
+            $name_id=SourceRules::select('name_id')->filter($filter)->groupBy('name_id')->get();
+            $names=Name::find($name_id);
+        }
+        else{
+            $names=Name::all();
+        }
         return NameResource::collection($names);
     }
 
@@ -38,9 +49,8 @@ class NameController extends Controller
      */
     public function store(NameRequest $request)
     {
-        $result=Name::firstOrCreate([
-            'name'=>$request->name
-        ]);
+        $data=$request->validated();
+        $result=Name::firstOrCreate($data);
         return $result;
     }
 

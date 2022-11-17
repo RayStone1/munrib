@@ -78,27 +78,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SubjectModal",
   data: function data() {
     return {
       sub_dialog: false,
-      type_subject: null,
-      name_subject: null,
+      subject: {
+        type: null,
+        name: null
+      },
       types_item: [{
-        url: "/mun-one",
+        id: 2,
         text: "Муниципальные образования 1ого уровня"
       }, {
-        url: "/mun-two",
+        id: 3,
         text: "Муниципальные образования 2ого уровня"
       }, {
-        url: "/name",
+        id: 4,
         text: "Орган власти"
-      }]
+      }],
+      error: false,
+      error_message: []
     };
   },
-  methods: {}
+  methods: {
+    addSubject: function addSubject() {
+      var _this = this;
+      axios.post("api/".concat(this.typeSubject(this.subject.type)), {
+        "name": this.subject.name
+      }).then(function (res) {
+        _this.subject.name = null;
+        _this.subject.type = null;
+      })["catch"](function (error) {});
+    },
+    typeSubject: function typeSubject(id) {
+      switch (id) {
+        case 2:
+          return "mun-one";
+          break;
+        case 3:
+          return "mun-two";
+          break;
+        case 4:
+          return "names";
+          break;
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -247,7 +276,7 @@ var render = function () {
                       attrs: { color: "blue darken-1", text: "" },
                       on: {
                         click: function ($event) {
-                          _vm.dialog_subject = false
+                          _vm.sub_dialog = false
                         },
                       },
                     },
@@ -276,15 +305,15 @@ var render = function () {
                                   outlined: "",
                                   items: _vm.types_item,
                                   "item-text": "text",
-                                  "item-value": "url",
+                                  "item-value": "id",
                                   label: "Тип субъекта",
                                 },
                                 model: {
-                                  value: _vm.type_subject,
+                                  value: _vm.subject.type,
                                   callback: function ($$v) {
-                                    _vm.type_subject = $$v
+                                    _vm.$set(_vm.subject, "type", $$v)
                                   },
-                                  expression: "type_subject",
+                                  expression: "subject.type",
                                 },
                               }),
                             ],
@@ -297,15 +326,17 @@ var render = function () {
                             [
                               _c("v-text-field", {
                                 attrs: {
+                                  error: _vm.error,
+                                  "error-messages": _vm.error_message,
                                   label: "Название субъекта",
                                   outlined: "",
                                 },
                                 model: {
-                                  value: _vm.name_subject,
+                                  value: _vm.subject.name,
                                   callback: function ($$v) {
-                                    _vm.name_subject = $$v
+                                    _vm.$set(_vm.subject, "name", $$v)
                                   },
-                                  expression: "name_subject",
+                                  expression: "subject.name",
                                 },
                               }),
                             ],
@@ -332,7 +363,7 @@ var render = function () {
                       attrs: { color: "blue darken-1", text: "" },
                       on: {
                         click: function ($event) {
-                          return _vm.addSubject(_vm.type_subject)
+                          return _vm.addSubject()
                         },
                       },
                     },

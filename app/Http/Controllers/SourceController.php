@@ -22,7 +22,6 @@ class SourceController extends Controller
     {
         $data=$request->validated();
         $filter=app()->make(SourceFilter::class,['queryParams'=>array_filter($data)]);
-        return $data;
         $sources=SourceRules::filter($filter)->get();
         return SourceResource::collection($sources);
     }

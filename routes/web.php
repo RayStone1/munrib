@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/login', [App\Http\Controllers\MainController::class, 'login'])->name('home');
 Route::get('/{any}',\App\Http\Controllers\MainController::class)->where('any', '.*');
 
 //Auth::routes();
 
-//Route::get('/login', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

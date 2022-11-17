@@ -9,4 +9,5 @@ class MunTwoSyn extends Model
 {
     protected $table="fs_mun_l2_syn";
     public $timestamps=false;
+    protected $guarded=[];
 }

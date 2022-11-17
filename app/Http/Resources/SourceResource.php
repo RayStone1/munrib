@@ -16,11 +16,11 @@ class SourceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'header_name'=>$this->header_name,
-            'topic_name'=>$this->topic_name,
-            'rules'=>new SourceRulesResource($this->rules)
+            'id'=>$this->source->id,
+            'name'=>$this->source->name,
+            'header_name'=>$this->source->header_name,
+            'topic_name'=>$this->source->topic_name,
+            'rules'=>new SourceRulesResource($this)
         ];
     }
 }

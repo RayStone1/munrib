@@ -1,6 +1,6 @@
 import vueRouter from "vue-router";
 import Vue from "vue";
-const Test= () => import('./pages/Test.vue')
+const Search= () => import('./pages/Search.vue')
 const Login= () => import('./pages/Login.vue')
 const Main=()=>import('./pages/Main.vue')
 Vue.use(vueRouter);
@@ -11,14 +11,15 @@ const routes=[
         component:Main,
         name:"index",
     },
-    {
-        path:'/test',
-        component:Test,
-    },
     // {
-    //     path:'/login',
-    //     component:Login,
+    //     path:'/test',
+    //     component:Test,
     // },
+    {
+        path:'/search',
+        component:Search,
+        props: true
+    },
 
 ]
 

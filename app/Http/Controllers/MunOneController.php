@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\MunOneFilter;
 use App\Http\Requests\MunOneRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\MunOneResource;
 use App\Models\MunOne;
 use App\Models\SourceRules;
@@ -17,12 +18,13 @@ class MunOneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(MunOneRequest $request)
+    public function index(SearchRequest $request)
     {
         $data=$request->validated();
-        if(isset($data['province'])){;
+        if($data){
             $filter=app()->make(MunOneFilter::class,['queryParams'=>array_filter($data)]);
-            $mun_one=SourceRules::filter($filter)->get();
+            $mun_one_id=SourceRules::select('l1_id')->filter($filter)->groupBy('l1_id')->get();
+            $mun_one=MunOne::find($mun_one_id);
         }
         else{
             $mun_one=MunOne::all();
@@ -35,22 +37,10 @@ class MunOneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(MunOneRequest $request)
     {
-        $result=MunOne::firstOrCreate([
-            'name'=>$request->name
-        ]);
+        $data=$request->validated();
+        $result=MunOne::firstOrCreate($data);
         return $result;
     }
 
@@ -63,17 +53,6 @@ class MunOneController extends Controller
     public function show(MunOne $mun_one)
     {
         return new MunOneResource($mun_one);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\MunOne  $munOne
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MunOne $munOne)
-    {
-        //
     }
 
     /**
