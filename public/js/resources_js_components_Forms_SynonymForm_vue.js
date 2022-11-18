@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SynonymForm",
@@ -141,19 +142,16 @@ __webpack_require__.r(__webpack_exports__);
     getSubject: function getSubject() {
       var _this = this;
       this.loading = true;
+      this.synonym.parent = false;
       axios.get("api/".concat(this.typeSubject(this.type_subject))).then(function (res) {
         _this.subjects = res.data.data;
         _this.loading = false;
       });
     },
     sendSynonym: function sendSynonym() {
-      var _this2 = this;
       axios.post("api/".concat(this.typeSubject(this.type_subject), "/").concat(this.synonym.parent, "/synonym"), {
         name: this.synonym.name
       }).then(function (res) {
-        _this2.synonym.name = null;
-        _this2.synonym.parent = null;
-        _this2.type_subject = null;
         console.log(res);
       })["catch"](function (error) {
         console.log(error);
@@ -250,7 +248,6 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "v-row",
-    { attrs: { justify: "center" } },
     [
       _c(
         "v-dialog",
@@ -267,7 +264,10 @@ var render = function () {
                     "v-btn",
                     _vm._g(
                       _vm._b(
-                        { attrs: { color: "transparent", elevation: "0" } },
+                        {
+                          staticClass: "col-12",
+                          attrs: { color: "transparent", elevation: "0" },
+                        },
                         "v-btn",
                         attrs,
                         false

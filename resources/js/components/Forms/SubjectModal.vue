@@ -9,6 +9,7 @@
                 <v-btn
                     v-bind="attrs"
                     v-on="on"
+                    class="col-12"
                     color="transparent"
                     elevation="0"
                 >

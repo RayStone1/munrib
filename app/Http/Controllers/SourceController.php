@@ -20,6 +20,7 @@ class SourceController extends Controller
      */
     public function index(SourceRequest $request)
     {
+
         $data=$request->validated();
         $filter=app()->make(SourceFilter::class,['queryParams'=>array_filter($data)]);
         $sources=SourceRules::filter($filter)->get();
@@ -53,9 +54,8 @@ class SourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Source $source)
+    public function show(SourceRules $source)
     {
-
         return new SourceResource($source);
     }
 

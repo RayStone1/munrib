@@ -1,5 +1,5 @@
 <template>
-    <v-row justify="center">
+    <v-row>
         <v-dialog
             v-model="source_dialog"
             persistent
@@ -7,6 +7,7 @@
         >
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
+                    class="col-12"
                     v-bind="attrs"
                     v-on="on"
                     color="transparent"
@@ -64,6 +65,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
+
                         color="blue darken-1"
                         text
                         @click="source_dialog = false"

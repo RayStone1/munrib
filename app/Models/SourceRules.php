@@ -12,6 +12,7 @@ class SourceRules extends Model
 
     protected $table="fs_source_rules";
     public $timestamps=false;
+    protected $primaryKey='source_id';
 
     public function province()
     {
@@ -19,7 +20,7 @@ class SourceRules extends Model
     }
     public function mun_one()
     {
-        return $this->belongsTo(MunOne::class,'source_id','id');
+        return $this->belongsTo(MunOne::class,'l1_id','id');
     }
     public function mun_two()
     {

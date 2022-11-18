@@ -5,7 +5,7 @@
                 <h3>Поиск</h3>
 
                 <v-row>
-                    <line-source v-for="n in 10"></line-source>
+<!--                    <line-source v-for="n in 10"></line-source>-->
 
                 </v-row>
 

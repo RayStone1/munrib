@@ -5,6 +5,7 @@ use App\Http\Controllers\MunOneSynonymController;
 use App\Http\Controllers\MunTwoController;
 use App\Http\Controllers\MunTwoSynonymController;
 use App\Http\Controllers\NameController;
+use App\Http\Controllers\NameSynonymController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\SourceController;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ Route::resource('mun-two',MunTwoController::class)->only(['show','index','store'
 Route::resource('mun-two.synonym',MunTwoSynonymController::class)->except(['edit','create'])->scoped();
 
 Route::resource('names',NameController::class)->only(['show','index','store']);
-
+Route::resource('names.synonym',NameSynonymController::class)->except(['edit','create'])->scoped();
 
 Route::resource('province',ProvinceController::class)->only(['show','index']);
 

@@ -3,6 +3,7 @@ import Vue from "vue";
 const Search= () => import('./pages/Search.vue')
 const Login= () => import('./pages/Login.vue')
 const Main=()=>import('./pages/Main.vue')
+const Source=()=>import('./pages/Source.vue')
 Vue.use(vueRouter);
 
 const routes=[
@@ -11,10 +12,10 @@ const routes=[
         component:Main,
         name:"index",
     },
-    // {
-    //     path:'/test',
-    //     component:Test,
-    // },
+    {
+        path:'/source/:id',
+        component:Source,
+    },
     {
         path:'/search',
         component:Search,

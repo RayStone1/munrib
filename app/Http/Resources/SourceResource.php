@@ -17,7 +17,7 @@ class SourceResource extends JsonResource
     {
         return [
             'id'=>$this->source->id,
-            'name'=>$this->source->name,
+            'name'=>$this->name,
             'header_name'=>$this->source->header_name,
             'topic_name'=>$this->source->topic_name,
             'rules'=>new SourceRulesResource($this)

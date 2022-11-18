@@ -5,7 +5,7 @@
                 <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
                 <v-toolbar-title><h4>Munrib</h4></v-toolbar-title>
 
-                <search-form/>
+
             </v-app-bar>
             <v-navigation-drawer
                 v-model="drawer"
@@ -54,19 +54,16 @@
 
 
 <script>
-import SearchForm from "./SearchForm";
 export default {
 
     name: "AppHeader",
-    components: {
-        SearchForm
-    },
+
 
     data: () => ({
         tabs: '/',
         links: [
             {name:'Главная',route:'/',icon:"mdi-home"},
-            {name:'Тест',route:'/test',icon:"mdi-home"},
+            {name:'Поиск',route:'/search',icon:"mdi-home"},
             {name:'Логин',route:'/login',icon:"mdi-home"},
         ],
         drawer: false,

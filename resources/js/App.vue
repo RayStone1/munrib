@@ -2,7 +2,8 @@
     <v-app id="inspire">
 
         <app-header/>
-        <router-view></router-view>
+            <router-view></router-view>
+
     </v-app>
 </template>
 

@@ -96,6 +96,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SourceModal",
@@ -194,7 +196,6 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "v-row",
-    { attrs: { justify: "center" } },
     [
       _c(
         "v-dialog",
@@ -211,7 +212,10 @@ var render = function () {
                     "v-btn",
                     _vm._g(
                       _vm._b(
-                        { attrs: { color: "transparent", elevation: "0" } },
+                        {
+                          staticClass: "col-12",
+                          attrs: { color: "transparent", elevation: "0" },
+                        },
                         "v-btn",
                         attrs,
                         false

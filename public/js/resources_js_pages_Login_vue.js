@@ -64,8 +64,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
@@ -187,129 +185,120 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-main",
+    "v-container",
+    { staticClass: "fill-height bg", attrs: { fluid: "" } },
     [
       _c(
-        "v-container",
-        { staticClass: "fill-height bg", attrs: { fluid: "" } },
+        "v-row",
+        { attrs: { align: "center", justify: "center" } },
         [
           _c(
-            "v-row",
-            { attrs: { align: "center", justify: "center" } },
+            "v-col",
+            { attrs: { cols: "12", sm: "8", md: "6" } },
             [
               _c(
-                "v-col",
-                { attrs: { cols: "12", sm: "8", md: "6" } },
+                "v-card",
+                {
+                  staticClass: "mx-auto py-12",
+                  attrs: { elevation: "3", "max-width": "500px" },
+                },
                 [
                   _c(
-                    "v-card",
-                    {
-                      staticClass: "mx-auto py-12",
-                      attrs: { elevation: "3", "max-width": "500px" },
-                    },
+                    "v-form",
                     [
+                      _c("v-img", {
+                        staticClass: "mx-auto",
+                        attrs: { src: "image/logo.png", "max-width": "450" },
+                      }),
+                      _vm._v(" "),
                       _c(
-                        "v-form",
+                        "v-card-text",
+                        { staticClass: "pb-0" },
                         [
-                          _c("v-img", {
-                            staticClass: "mx-auto",
+                          _c("v-text-field", {
                             attrs: {
-                              src: "image/logo.png",
-                              "max-width": "450",
+                              label: "Логин",
+                              name: "login",
+                              rules: [_vm.rules.required],
+                              outlined: "",
+                              clearable: "",
+                            },
+                            model: {
+                              value: _vm.user.login,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.user, "login", $$v)
+                              },
+                              expression: "user.login",
                             },
                           }),
                           _vm._v(" "),
+                          _c("v-text-field", {
+                            attrs: {
+                              "append-icon": _vm.passwordConfig.showPassword
+                                ? "mdi-eye"
+                                : "mdi-eye-off",
+                              type: _vm.passwordConfig.showPassword
+                                ? "text"
+                                : "password",
+                              rules: [_vm.rules.required],
+                              name: "password",
+                              label: "Пароль",
+                              outlined: "",
+                              clearable: "",
+                            },
+                            on: {
+                              "click:append": function ($event) {
+                                _vm.passwordConfig.showPassword =
+                                  !_vm.passwordConfig.showPassword
+                              },
+                            },
+                            model: {
+                              value: _vm.user.password,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.user, "password", $$v)
+                              },
+                              expression: "user.password",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-card-actions",
+                        { staticClass: "px-4" },
+                        [
                           _c(
-                            "v-card-text",
-                            { staticClass: "pb-0" },
+                            "v-row",
                             [
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "Логин",
-                                  name: "login",
-                                  rules: [_vm.rules.required],
-                                  outlined: "",
-                                  clearable: "",
-                                },
-                                model: {
-                                  value: _vm.user.login,
-                                  callback: function ($$v) {
-                                    _vm.$set(_vm.user, "login", $$v)
-                                  },
-                                  expression: "user.login",
-                                },
-                              }),
+                              _c("v-col", { attrs: { cols: "6" } }),
                               _vm._v(" "),
-                              _c("v-text-field", {
-                                attrs: {
-                                  "append-icon": _vm.passwordConfig.showPassword
-                                    ? "mdi-eye"
-                                    : "mdi-eye-off",
-                                  type: _vm.passwordConfig.showPassword
-                                    ? "text"
-                                    : "password",
-                                  rules: [_vm.rules.required],
-                                  name: "password",
-                                  label: "Пароль",
-                                  outlined: "",
-                                  clearable: "",
-                                },
-                                on: {
-                                  "click:append": function ($event) {
-                                    _vm.passwordConfig.showPassword =
-                                      !_vm.passwordConfig.showPassword
-                                  },
-                                },
-                                model: {
-                                  value: _vm.user.password,
-                                  callback: function ($$v) {
-                                    _vm.$set(_vm.user, "password", $$v)
-                                  },
-                                  expression: "user.password",
-                                },
-                              }),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-actions",
-                            { staticClass: "px-4" },
-                            [
+                              _c("v-col", { attrs: { cols: "6" } }),
+                              _vm._v(" "),
                               _c(
-                                "v-row",
+                                "v-col",
+                                { attrs: { cols: "12" } },
                                 [
-                                  _c("v-col", { attrs: { cols: "6" } }),
-                                  _vm._v(" "),
-                                  _c("v-col", { attrs: { cols: "6" } }),
-                                  _vm._v(" "),
                                   _c(
-                                    "v-col",
-                                    { attrs: { cols: "12" } },
-                                    [
-                                      _c(
-                                        "v-btn",
-                                        {
-                                          attrs: {
-                                            dark: "",
-                                            "x-large": "",
-                                            color: "#0055A3",
-                                            block: "",
-                                          },
-                                          on: {
-                                            click: function ($event) {
-                                              $event.preventDefault()
-                                              return _vm.login.apply(
-                                                null,
-                                                arguments
-                                              )
-                                            },
-                                          },
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        dark: "",
+                                        "x-large": "",
+                                        color: "#0055A3",
+                                        block: "",
+                                      },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.preventDefault()
+                                          return _vm.login.apply(
+                                            null,
+                                            arguments
+                                          )
                                         },
-                                        [_vm._v("Войти")]
-                                      ),
-                                    ],
-                                    1
+                                      },
+                                    },
+                                    [_vm._v("Войти")]
                                   ),
                                 ],
                                 1

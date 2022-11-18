@@ -1,5 +1,5 @@
 <template>
-    <v-row justify="center">
+    <v-row>
         <v-dialog
             v-model="synonym_dialog"
             persistent
@@ -9,6 +9,7 @@
                 <v-btn
                     v-bind="attrs"
                     v-on="on"
+                    class="col-12"
                     color="transparent"
                     elevation="0"
                 >
@@ -120,19 +121,17 @@ export default {
         },
         getSubject(){
             this.loading=true
+            this.synonym.parent=false
             axios.get(`api/${this.typeSubject(this.type_subject)}`)
                 .then(res=>{
                     this.subjects=res.data.data;
+
                     this.loading=false;
                 })
         },
         sendSynonym(){
             axios.post(`api/${this.typeSubject(this.type_subject)}/${this.synonym.parent}/synonym`,{name:this.synonym.name})
                 .then(res=>{
-                    this.synonym.name=null
-                    this.synonym.parent=null
-                    this.type_subject=null
-
                     console.log(res);
                 })
                 .catch(error=>{
@@ -144,5 +143,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
