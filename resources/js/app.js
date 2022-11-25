@@ -1,25 +1,34 @@
-require('./bootstrap');
-import Vue from "vue";
+import Vue from 'vue'
+//Vue-router
 import router from "./router";
-import Vuetify from "vuetify";
+//Vuex
+import store from "./store";
+//Vuetify
+import Vuetify from 'vuetify'
 import "vuetify/dist/vuetify.min.css"
 import "@mdi/font/css/materialdesignicons.min.css"
-import App from "./App.vue";
 Vue.use(Vuetify);
 
+import App from "./App.vue";
+require('./bootstrap');
 
-const app = new Vue({
-
-    vuetify:new Vuetify(
-        {
-            theme: {
-                base:"#0055A3",
-            },
-            icons: {
-                iconfont: 'mdiSvg',
-            },
-        }
-    ),
+const app=new Vue({
     router,
-    render: function (h) { return h(App) },
-}).$mount('#app');
+    store,
+    vuetify:new Vuetify({
+        theme: {
+            themes: {
+                light: {
+                    primary: '#3272C0',
+                    secondary: '#b71c1c',
+                    accent: '#b71c1c',
+                    error: '#DC5A63',
+                    info: '#b71c1c',
+                    success: '#b71c1c',
+                    warning: '#b71c1c',
+                },
+            },
+        },
+    }),
+    render: function (h) { return h(App) }
+}).$mount('#app')

@@ -1,35 +1,22 @@
 <template>
-    <v-app id="inspire">
-
-        <app-header/>
-            <router-view></router-view>
-
+    <v-app>
+        <v-header></v-header>
+        <v-main>
+            <router-view/>
+        </v-main>
     </v-app>
 </template>
 
-
 <script>
-import appHeader from "./components/AppHeader";
-
 export default {
-    data() {
-        return {
-            drawer: false
-        };
-    },
-
-    components: {
-        appHeader
-    },
-
-    methods: {
-
-
-    },
-};
+    name: "App",
+    components:{
+        VHeader:()=>import('./components/VHeader')
+    }
+}
 </script>
-<style>
 
+<style>
 h1{
     font-weight: 300;
     font-size: 96px;
@@ -87,5 +74,14 @@ input{
 }
 .base--text{
     color: #0055A3;
+}
+.main--input .mdi-close{
+    font-size:16px;
+    padding: 8px;
+    border-radius: 8px;
+}
+.main--input .mdi-close:hover{
+    color:white !important;;
+    background-color: #7AA0CF;
 }
 </style>
