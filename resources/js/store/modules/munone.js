@@ -12,11 +12,12 @@ const mutations= {
     }
 }
 const actions= {
-    getMunOne({state,commit,dispatch},filter){
-        axios.get("api/mun-one",{params:filter})
-            .then(res=>{
-                commit('setMunOne',res.data.data)
-            })
+     getMunOne({state,commit,dispatch},filter){
+         axios.get("api/mun-one", {params: filter})
+             .then(res=>{
+                 commit('setMunOne',res.data.data)
+             })
+
     },
 }
 export default  {

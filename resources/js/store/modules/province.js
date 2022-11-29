@@ -12,7 +12,7 @@ const mutations= {
     }
 }
 const actions= {
-    getProvince({state,commit,dispatch}){
+    async getProvince({state,commit,dispatch}){
         axios.get("api/province")
             .then(res=>{
                 commit('setProvince',res.data.data)

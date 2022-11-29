@@ -5,6 +5,7 @@ import MunOne from "./modules/munone";
 import MunTwo from "./modules/muntwo";
 import Name from "./modules/name";
 import Source from "./modules/source";
+import Search from "./modules/search";
 
 
 Vue.use(Vuex)
@@ -16,5 +17,6 @@ export default new Vuex.Store({
         MunTwo,
         Name,
         Source,
+        Search
     }
 })
