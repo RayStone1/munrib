@@ -79,6 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SearchForm",
@@ -90,11 +91,13 @@ __webpack_require__.r(__webpack_exports__);
         mun_two: null,
         name: null
       },
-      type: null
+      type: null,
+      loading: false
     };
   },
   mounted: function mounted() {
     this.getList('province');
+    this.sendType('province');
   },
   computed: {
     province: function province() {
@@ -108,46 +111,68 @@ __webpack_require__.r(__webpack_exports__);
     },
     name: function name() {
       return this.$store.getters.name;
+    },
+    source: function source() {
+      return this.$store.getters.source;
     }
   },
   watch: {
-    //Получаю профинции
+    //Получение
     'source_rules.province': function source_rulesProvince(val) {
       this.source_rules.mun_one = null;
       this.source_rules.mun_two = null;
       this.source_rules.name = null;
-      if (val) this.getList('mun_one');else this.getList('province');
-    },
-    'province': function province(val) {
-      this.sendList(this.province);
+      //Если переменная устанволена запрашивать МО1
+      if (val) {
+        this.getList('mun_one');
+        this.sendType('mun_one');
+      }
+      //    Иначе отрисовать провинции
+      else {
+        this.getList('province');
+        this.sendType('province');
+      }
     },
     'source_rules.mun_one': function source_rulesMun_one(val) {
       this.source_rules.mun_two = null;
       this.source_rules.name = null;
       if (val) {
         this.getList('mun_two');
-        this.getList('name');
+        this.sendType('mun_two');
+      } else {
+        this.sendList(this.mun_one);
+        this.sendType('mun_one');
       }
+    },
+    'source_rules.mun_two': function source_rulesMun_two(val) {
+      this.source_rules.name = null;
+      if (val) {
+        this.getList('name');
+        this.sendType('name');
+      } else {
+        this.sendList(this.mun_two);
+        this.sendType('mun_two');
+      }
+    },
+    //Вывод в список
+    'province': function province(val) {
+      this.sendList(this.province);
     },
     'mun_one': function mun_one(val) {
       this.sendList(this.mun_one);
     },
-    'source_rules.mun_two': function source_rulesMun_two(val) {
-      this.source_rules.mun_two = null;
-      this.source_rules.name = null;
-      if (val) {
-        this.getList('name');
-      }
-    },
     'mun_two': function mun_two(val) {
-      if (val == 0) {
-        this.sendList(this.name);
+      if (Object.keys(val) == 0) {
+        this.getList('name');
       } else {
         this.sendList(this.mun_two);
       }
     },
     'name': function name(val) {
       this.sendList(this.name);
+    },
+    'source': function source(val) {
+      this.sendList(this.source);
     }
   },
   methods: {
@@ -173,10 +198,56 @@ __webpack_require__.r(__webpack_exports__);
             this.$store.dispatch('getName', this.source_rules);
             break;
           }
+        case 'source':
+          {
+            this.$store.dispatch('getSource', this.source_rules);
+            break;
+          }
       }
     },
     sendList: function sendList(list) {
       this.$store.dispatch('updateSearch', list);
+    },
+    sendType: function sendType(type) {
+      var create;
+      switch (type) {
+        case 'province':
+          {
+            create = {
+              text: 'Субъект РФ',
+              name: 'province'
+            };
+            break;
+          }
+        case 'mun_one':
+          {
+            create = {
+              text: 'МО 1',
+              name: 'mun-one'
+            };
+            break;
+          }
+        case 'mun_two':
+          {
+            create = {
+              text: 'МО 2',
+              name: 'mun-two'
+            };
+            break;
+          }
+        case 'name':
+          {
+            create = {
+              text: 'Наиименование',
+              name: 'name'
+            };
+            break;
+          }
+      }
+      this.$emit('create', create);
+    },
+    getSource: function getSource() {
+      this.getList('source');
     }
   }
 });
@@ -355,6 +426,7 @@ var render = function () {
           items: _vm.name,
           "item-text": "name",
           "item-value": "id",
+          loading: _vm.loading,
         },
         model: {
           value: _vm.source_rules.name,

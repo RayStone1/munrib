@@ -9,6 +9,7 @@
                 cols="12"
             >
                 <search-form
+                    @create="setType"
                 />
             </v-col>
             <v-col
@@ -17,10 +18,10 @@
                 cols="12"
             >
                 <search-list
-                    :items="result"
                 />
                 <create-btn
-
+                    v-if="type"
+                   :test="type"
                 />
             </v-col>
         </v-row>
@@ -40,7 +41,7 @@ export default {
             name:null,
         },
         result:null,
-        type:null,
+        type:null
     }),
     components:{
         SearchList:()=>import('../components/SearchList'),
@@ -48,6 +49,11 @@ export default {
         SearchForm:()=>import('../components/SearchForm')
 
     },
+    methods:{
+        setType(data){
+            this.type=data
+        }
+    }
 }
 </script>
 

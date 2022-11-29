@@ -55,14 +55,13 @@ export default {
         test:{
             type:[Array,Object],
             default:()=>({
-                text:'Субъект РФ',
+                text:'Субъект РФ1',
                 name:'province'
             })
         },
 
     },
     mounted() {
-
     },
     data:()=>({
         dialog: false,

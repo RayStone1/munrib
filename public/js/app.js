@@ -5374,6 +5374,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Search",
@@ -5398,6 +5399,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     SearchForm: function SearchForm() {
       return __webpack_require__.e(/*! import() */ "resources_js_components_SearchForm_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../components/SearchForm */ "./resources/js/components/SearchForm.vue"));
+    }
+  },
+  methods: {
+    setType: function setType(data) {
+      this.type = data;
     }
   }
 });
@@ -29355,7 +29361,7 @@ var render = function () {
           _c(
             "v-col",
             { staticClass: "pa-8", attrs: { lg: "4", md: "6", cols: "12" } },
-            [_c("search-form")],
+            [_c("search-form", { on: { create: _vm.setType } })],
             1
           ),
           _vm._v(" "),
@@ -29363,9 +29369,11 @@ var render = function () {
             "v-col",
             { attrs: { lg: "8", md: "6", cols: "12" } },
             [
-              _c("search-list", { attrs: { items: _vm.result } }),
+              _c("search-list"),
               _vm._v(" "),
-              _c("create-btn"),
+              _vm.type
+                ? _c("create-btn", { attrs: { test: _vm.type } })
+                : _vm._e(),
             ],
             1
           ),

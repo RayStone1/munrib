@@ -48,6 +48,7 @@
             item-text="name"
             item-value="id"
             v-model="source_rules.name"
+            :loading="loading"
         ></v-autocomplete>
         <v-btn
             class="rounded-lg mt-1"
@@ -77,9 +78,11 @@ export default {
             name:null,
         },
         type:null,
+        loading:false
     }),
     mounted() {
         this.getList('province')
+        this.sendType('province')
     },
     computed:{
         province(){
@@ -94,49 +97,71 @@ export default {
         name(){
             return this.$store.getters.name
         },
+        source(){
+            return this.$store.getters.source
+        },
     },
     watch:{
-        //Получаю профинции
+        //Получение
         'source_rules.province':function (val){
             this.source_rules.mun_one=null
             this.source_rules.mun_two=null
             this.source_rules.name=null
-            if(val) this.getList('mun_one')
-            else this.getList('province')
-
-        },
-        'province':function (val){
-            this.sendList(this.province)
+            //Если переменная устанволена запрашивать МО1
+            if(val) {
+                this.getList('mun_one')
+                this.sendType('mun_one')
+            }
+            //    Иначе отрисовать провинции
+            else {
+                this.getList('province')
+                this.sendType('province')
+            }
         },
         'source_rules.mun_one':function (val){
             this.source_rules.mun_two=null
             this.source_rules.name=null
             if(val){
                 this.getList('mun_two')
-                this.getList('name')
+                this.sendType('mun_two')
+            }else{
+                this.sendList(this.mun_one)
+                this.sendType('mun_one')
             }
+        },
+        'source_rules.mun_two':function (val){
+            this.source_rules.name=null
+            if(val){
+                this.getList('name')
+                this.sendType('name')
+            }
+            else{
+                this.sendList(this.mun_two)
+                this.sendType('mun_two')
+            }
+        },
+        //Вывод в список
+        'province':function (val){
+            this.sendList(this.province)
         },
         'mun_one':function (val){
             this.sendList(this.mun_one)
         },
-        'source_rules.mun_two':function (val){
-            this.source_rules.mun_two=null
-            this.source_rules.name=null
-            if(val){
-                this.getList('name')
-            }
-        },
         'mun_two':function (val){
-            if(val==0) {
-                this.sendList(this.name)
+            if(Object.keys(val)==0){
+                this.getList('name')
+
             }else{
                 this.sendList(this.mun_two)
             }
+
         },
         'name':function (val){
-
             this.sendList(this.name)
 
+        },
+        'source':function (val){
+            this.sendList(this.source)
 
         },
     },
@@ -159,10 +184,51 @@ export default {
                     this.$store.dispatch('getName',this.source_rules)
                     break;
                 }
+                case 'source':{
+                    this.$store.dispatch('getSource',this.source_rules)
+                    break;
+                }
             }
         },
         sendList(list){
             this.$store.dispatch('updateSearch',list)
+        },
+        sendType(type){
+            let create;
+            switch (type){
+                case 'province':{
+                    create={
+                        text:'Субъект РФ',
+                        name:'province'
+                    }
+                    break;
+                }
+                case 'mun_one':{
+                    create={
+                        text:'МО 1',
+                        name:'mun-one'
+                    }
+                    break;
+                }
+                case 'mun_two':{
+                    create={
+                        text:'МО 2',
+                        name:'mun-two'
+                    }
+                    break;
+                }
+                case 'name':{
+                    create={
+                        text:'Наиименование',
+                        name:'name'
+                    }
+                    break;
+                }
+            }
+            this.$emit('create',create)
+        },
+        getSource(){
+            this.getList('source')
         }
     }
 }

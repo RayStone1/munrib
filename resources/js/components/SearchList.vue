@@ -25,16 +25,10 @@
 <script>
 export default {
     name: "SearchList",
-    props:{
-        items:{
-            type:Array
-        },
-    },
     mounted() {
     },
     computed:{
         result(){
-
             return this.$store.getters.search;
         },
     },

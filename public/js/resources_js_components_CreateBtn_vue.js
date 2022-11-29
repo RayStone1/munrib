@@ -69,7 +69,7 @@ __webpack_require__.r(__webpack_exports__);
       type: [Array, Object],
       "default": function _default() {
         return {
-          text: 'Субъект РФ',
+          text: 'Субъект РФ1',
           name: 'province'
         };
       }
