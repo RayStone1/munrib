@@ -23,11 +23,11 @@ class MunOneController extends Controller
         $data=$request->validated();
         if($data){
             $filter=app()->make(MunOneFilter::class,['queryParams'=>array_filter($data)]);
-            $mun_one_id=SourceRules::select('l1_id')->filter($filter)->groupBy('l1_id')->get();
-            $mun_one=MunOne::find($mun_one_id);
+            $mun_one_id=SourceRules::query()->select('l1_id')->filter($filter)->groupBy('l1_id')->get();
+            $mun_one=MunOne::find($mun_one_id)->sortBy('name');
         }
         else{
-            $mun_one=MunOne::all();
+            $mun_one=MunOne::query()->orderBy('name')->get();
         }
         return MunOneResource::collection($mun_one);
     }
@@ -40,6 +40,7 @@ class MunOneController extends Controller
     public function store(MunOneRequest $request)
     {
         $data=$request->validated();
+        return
         $result=MunOne::firstOrCreate($data);
         return $result;
     }

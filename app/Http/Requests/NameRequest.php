@@ -24,13 +24,22 @@ class NameRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required||unique:fs_names'
+            'name'=>'required||unique:fs_names',
+            'minD'=>'required'
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'name'=>'Субъект РФ',
+            'minD'=>'MinD',
         ];
     }
     public function messages()
     {
         return [
             'unique' => 'Такой субъект уже существует',
+            'required'=>':attribute обязательное поле'
         ];
     }
 }

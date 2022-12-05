@@ -16,7 +16,7 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        $province=Province::all();
+        $province=Province::orderBy('name')->get();
         return ProvinceResource::collection($province);
     }
 

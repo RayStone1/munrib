@@ -19,6 +19,14 @@ const actions= {
                 commit('setMunTwo',res.data.data)
             })
     },
+    createMunTwo({commit},data){
+        axios.post("api/mun-two",data)
+            .then(res=>{
+
+            })
+            .catch(e=>{
+            })
+    }
 }
 export default  {
     state,mutations,getters,actions

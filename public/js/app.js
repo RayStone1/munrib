@@ -5603,9 +5603,7 @@ var mutations = {
 };
 var actions = {
   getMunOne: function getMunOne(_ref, filter) {
-    var state = _ref.state,
-      commit = _ref.commit,
-      dispatch = _ref.dispatch;
+    var commit = _ref.commit;
     axios.get("api/mun-one", {
       params: filter
     }).then(function (res) {
@@ -5656,6 +5654,10 @@ var actions = {
     }).then(function (res) {
       commit('setMunTwo', res.data.data);
     });
+  },
+  createMunTwo: function createMunTwo(_ref2, data) {
+    var commit = _ref2.commit;
+    axios.post("api/mun-two", data).then(function (res) {})["catch"](function (e) {});
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5701,6 +5703,12 @@ var actions = {
     }).then(function (res) {
       commit('setName', res.data.data);
     });
+  },
+  createName: function createName(_ref2, data) {
+    var commit = _ref2.commit;
+    axios.post("api/names", data).then(function (res) {
+      console.log(res.status);
+    })["catch"](function (e) {});
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -29372,7 +29380,7 @@ var render = function () {
               _c("search-list"),
               _vm._v(" "),
               _vm.type
-                ? _c("create-btn", { attrs: { test: _vm.type } })
+                ? _c("create-btn", { attrs: { typeSubject: _vm.type } })
                 : _vm._e(),
             ],
             1

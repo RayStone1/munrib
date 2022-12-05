@@ -18,6 +18,14 @@ const actions= {
                 commit('setName',res.data.data)
             })
     },
+    createName({commit},data){
+        axios.post("api/names",data)
+            .then(res=>{
+                console.log(res.status)
+            })
+            .catch(e=>{
+            })
+    }
 }
 export default  {
     state,mutations,getters,actions

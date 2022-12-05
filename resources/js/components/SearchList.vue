@@ -13,8 +13,9 @@
             <tbody>
             <tr
                 v-for="item in result"
-                :key="item.name"
+                :key="item.id"
             >
+
                 <td>{{ item.name }}</td>
             </tr>
             </tbody>
@@ -25,13 +26,14 @@
 <script>
 export default {
     name: "SearchList",
-    mounted() {
-    },
     computed:{
         result(){
             return this.$store.getters.search;
         },
     },
+    watch:{
+
+    }
 }
 </script>
 

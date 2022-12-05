@@ -21,7 +21,7 @@
                 />
                 <create-btn
                     v-if="type"
-                   :test="type"
+                   :typeSubject="type"
                 />
             </v-col>
         </v-row>

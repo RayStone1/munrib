@@ -23,10 +23,10 @@ class MunTwoController extends Controller
         if($data){
             $filter=app()->make(MunTwoFilter::class,['queryParams'=>array_filter($data)]);
             $mun_two_id=SourceRules::select('l2_id')->filter($filter)->groupBy('l2_id')->get();
-            $mun_two=MunTwo::find($mun_two_id);
+            $mun_two=MunTwo::find($mun_two_id)->sortBy('name');
         }
         else{
-            $mun_two=MunTwo::all();
+            $mun_two=MunTwo::query()->orderBy('name')->get();
         }
         return MunTwoResource::collection($mun_two);
     }
@@ -50,6 +50,7 @@ class MunTwoController extends Controller
     public function store(MunTwoRequest $request)
     {
         $data=$request->validated();
+        return $data;
         $result=MunTwo::firstOrCreate($data);
         return $result;
     }

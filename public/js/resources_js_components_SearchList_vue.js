@@ -35,15 +35,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SearchList",
-  mounted: function mounted() {},
   computed: {
     result: function result() {
       return this.$store.getters.search;
     }
-  }
+  },
+  watch: {}
 });
 
 /***/ }),
@@ -150,7 +151,7 @@ var render = function () {
             _c(
               "tbody",
               _vm._l(_vm.result, function (item) {
-                return _c("tr", { key: item.name }, [
+                return _c("tr", { key: item.id }, [
                   _c("td", [_vm._v(_vm._s(item.name))]),
                 ])
               }),

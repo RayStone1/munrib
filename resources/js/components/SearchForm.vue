@@ -60,7 +60,7 @@
         >
             <v-icon
 
-            >mdi-plus-box
+            >mdi-filter
             </v-icon>
             Применить фильтр
         </v-btn>
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex"
 export default {
     name: "SearchForm",
     data:()=>({
@@ -81,25 +82,11 @@ export default {
         loading:false
     }),
     mounted() {
-        this.getList('province')
-        this.sendType('province')
+        this.getList('Province')
     },
     computed:{
-        province(){
-            return this.$store.getters.province
-        },
-        mun_one(){
-            return this.$store.getters.mun_one
-        },
-        mun_two(){
-            return this.$store.getters.mun_two
-        },
-        name(){
-            return this.$store.getters.name
-        },
-        source(){
-            return this.$store.getters.source
-        },
+        ...mapGetters(['province','mun_one','mun_two','name','source']),
+
     },
     watch:{
         //Получение
@@ -109,36 +96,41 @@ export default {
             this.source_rules.name=null
             //Если переменная устанволена запрашивать МО1
             if(val) {
-                this.getList('mun_one')
-                this.sendType('mun_one')
+                this.getList('MunOne',this.source_rules)
+                this.sendType('mun-one')
             }
             //    Иначе отрисовать провинции
             else {
-                this.getList('province')
-                this.sendType('province')
+                this.sendType()
+                this.getList('Province')
             }
         },
         'source_rules.mun_one':function (val){
             this.source_rules.mun_two=null
             this.source_rules.name=null
             if(val){
-                this.getList('mun_two')
-                this.sendType('mun_two')
+                this.getList('MunTwo',this.source_rules)
+                this.sendType('mun-two')
             }else{
                 this.sendList(this.mun_one)
-                this.sendType('mun_one')
+                this.sendType('mun-one')
             }
         },
         'source_rules.mun_two':function (val){
             this.source_rules.name=null
             if(val){
-                this.getList('name')
-                this.sendType('name')
+                this.getList('Name',this.source_rules)
+                this.sendType('names')
             }
             else{
                 this.sendList(this.mun_two)
-                this.sendType('mun_two')
+                this.sendType('mun-two')
             }
+        },
+        'source_rules.name':function (val){
+                this.sendList(this.name)
+                this.sendType('names')
+
         },
         //Вывод в список
         'province':function (val){
@@ -149,7 +141,7 @@ export default {
         },
         'mun_two':function (val){
             if(Object.keys(val)==0){
-                this.getList('name')
+                this.getList('Name',this.source_rules)
 
             }else{
                 this.sendList(this.mun_two)
@@ -166,29 +158,8 @@ export default {
         },
     },
     methods:{
-        getList(type){
-            switch (type){
-                case 'province':{
-                    this.$store.dispatch('getProvince')
-                    break;
-                }
-                case 'mun_one':{
-                    this.$store.dispatch('getMunOne',this.source_rules)
-                    break;
-                }
-                case 'mun_two':{
-                    this.$store.dispatch('getMunTwo',this.source_rules)
-                    break;
-                }
-                case 'name':{
-                    this.$store.dispatch('getName',this.source_rules)
-                    break;
-                }
-                case 'source':{
-                    this.$store.dispatch('getSource',this.source_rules)
-                    break;
-                }
-            }
+        getList(type,filter=false){
+            this.$store.dispatch(`get${type}`,filter)
         },
         sendList(list){
             this.$store.dispatch('updateSearch',list)
@@ -196,39 +167,34 @@ export default {
         sendType(type){
             let create;
             switch (type){
-                case 'province':{
-                    create={
-                        text:'Субъект РФ',
-                        name:'province'
-                    }
-                    break;
-                }
-                case 'mun_one':{
+                case 'mun-one':{
                     create={
                         text:'МО 1',
-                        name:'mun-one'
+                        name:type
                     }
                     break;
                 }
-                case 'mun_two':{
+                case 'mun-two':{
                     create={
                         text:'МО 2',
-                        name:'mun-two'
+                        name:type
                     }
                     break;
                 }
-                case 'name':{
+                case 'names':{
                     create={
-                        text:'Наиименование',
-                        name:'name'
+                        text:'Орган власти',
+                        name:type
                     }
                     break;
                 }
+                default:
+                    create=null
             }
             this.$emit('create',create)
         },
         getSource(){
-            this.getList('source')
+            this.getList('Source',this.source_rules)
         }
     }
 }

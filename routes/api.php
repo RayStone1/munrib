@@ -29,8 +29,6 @@ use Illuminate\Support\Facades\Route;
 //
 //});
 
-Route::post('create',\App\Http\Controllers\CreateController::class);
-
 
 Route::resource('mun-one',MunOneController::class)->only(['show','index','store']);
 Route::resource('mun-one.synonym',MunOneSynonymController::class)->except(['edit','create'])->scoped();

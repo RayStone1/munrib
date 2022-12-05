@@ -11,6 +11,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 //
 //
 //
@@ -81,6 +85,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SearchForm",
   data: function data() {
@@ -96,26 +101,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.getList('province');
-    this.sendType('province');
+    this.getList('Province');
   },
-  computed: {
-    province: function province() {
-      return this.$store.getters.province;
-    },
-    mun_one: function mun_one() {
-      return this.$store.getters.mun_one;
-    },
-    mun_two: function mun_two() {
-      return this.$store.getters.mun_two;
-    },
-    name: function name() {
-      return this.$store.getters.name;
-    },
-    source: function source() {
-      return this.$store.getters.source;
-    }
-  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['province', 'mun_one', 'mun_two', 'name', 'source'])),
   watch: {
     //Получение
     'source_rules.province': function source_rulesProvince(val) {
@@ -124,35 +112,39 @@ __webpack_require__.r(__webpack_exports__);
       this.source_rules.name = null;
       //Если переменная устанволена запрашивать МО1
       if (val) {
-        this.getList('mun_one');
-        this.sendType('mun_one');
+        this.getList('MunOne', this.source_rules);
+        this.sendType('mun-one');
       }
       //    Иначе отрисовать провинции
       else {
-        this.getList('province');
-        this.sendType('province');
+        this.sendType();
+        this.getList('Province');
       }
     },
     'source_rules.mun_one': function source_rulesMun_one(val) {
       this.source_rules.mun_two = null;
       this.source_rules.name = null;
       if (val) {
-        this.getList('mun_two');
-        this.sendType('mun_two');
+        this.getList('MunTwo', this.source_rules);
+        this.sendType('mun-two');
       } else {
         this.sendList(this.mun_one);
-        this.sendType('mun_one');
+        this.sendType('mun-one');
       }
     },
     'source_rules.mun_two': function source_rulesMun_two(val) {
       this.source_rules.name = null;
       if (val) {
-        this.getList('name');
-        this.sendType('name');
+        this.getList('Name', this.source_rules);
+        this.sendType('names');
       } else {
         this.sendList(this.mun_two);
-        this.sendType('mun_two');
+        this.sendType('mun-two');
       }
+    },
+    'source_rules.name': function source_rulesName(val) {
+      this.sendList(this.name);
+      this.sendType('names');
     },
     //Вывод в список
     'province': function province(val) {
@@ -163,7 +155,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     'mun_two': function mun_two(val) {
       if (Object.keys(val) == 0) {
-        this.getList('name');
+        this.getList('Name', this.source_rules);
       } else {
         this.sendList(this.mun_two);
       }
@@ -177,33 +169,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getList: function getList(type) {
-      switch (type) {
-        case 'province':
-          {
-            this.$store.dispatch('getProvince');
-            break;
-          }
-        case 'mun_one':
-          {
-            this.$store.dispatch('getMunOne', this.source_rules);
-            break;
-          }
-        case 'mun_two':
-          {
-            this.$store.dispatch('getMunTwo', this.source_rules);
-            break;
-          }
-        case 'name':
-          {
-            this.$store.dispatch('getName', this.source_rules);
-            break;
-          }
-        case 'source':
-          {
-            this.$store.dispatch('getSource', this.source_rules);
-            break;
-          }
-      }
+      var filter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.$store.dispatch("get".concat(type), filter);
     },
     sendList: function sendList(list) {
       this.$store.dispatch('updateSearch', list);
@@ -211,43 +178,37 @@ __webpack_require__.r(__webpack_exports__);
     sendType: function sendType(type) {
       var create;
       switch (type) {
-        case 'province':
-          {
-            create = {
-              text: 'Субъект РФ',
-              name: 'province'
-            };
-            break;
-          }
-        case 'mun_one':
+        case 'mun-one':
           {
             create = {
               text: 'МО 1',
-              name: 'mun-one'
+              name: type
             };
             break;
           }
-        case 'mun_two':
+        case 'mun-two':
           {
             create = {
               text: 'МО 2',
-              name: 'mun-two'
+              name: type
             };
             break;
           }
-        case 'name':
+        case 'names':
           {
             create = {
-              text: 'Наиименование',
-              name: 'name'
+              text: 'Орган власти',
+              name: type
             };
             break;
           }
+        default:
+          create = null;
       }
       this.$emit('create', create);
     },
     getSource: function getSource() {
-      this.getList('source');
+      this.getList('Source', this.source_rules);
     }
   }
 });
@@ -450,7 +411,7 @@ var render = function () {
           },
         },
         [
-          _c("v-icon", [_vm._v("mdi-plus-box\n        ")]),
+          _c("v-icon", [_vm._v("mdi-filter\n        ")]),
           _vm._v("\n        Применить фильтр\n    "),
         ],
         1

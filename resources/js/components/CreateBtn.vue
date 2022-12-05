@@ -14,17 +14,41 @@
                 <v-icon>
                     mdi-plus-box
                 </v-icon>
-                Добавить {{test.text}}
+                Добавить {{typeSubject.text}}
             </v-btn>
         </template>
         <v-card>
             <v-card-title>
-                <span class="text-h5">Добавить {{test.text}}</span>
+                <span class="text-h5">Добавить {{typeSubject.text}}</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
-                    <v-row>
-                    </v-row>
+                    <v-text-field
+                        class="main--input"
+                        auto-select-first
+                        outlined
+                        clearable
+                        label="Субъекты РФ"
+                        v-model="name"
+                    ></v-text-field>
+                    <v-select
+                        class="main--input"
+                        :items="[1,2,3,4]"
+                        clearable
+                        label="MinD"
+                        outlined
+                        v-model="minD"
+                    ></v-select>
+                    <div v-if="errors" class="errors">
+                        <v-alert
+                            dense
+                            outlined
+                            type="error"
+                            v-for="(val,name) in errors"
+                        >
+                            {{ val[0] }}
+                        </v-alert>
+                    </div>
                 </v-container>
             </v-card-text>
             <v-card-actions>
@@ -32,16 +56,16 @@
                 <v-btn
                     color="blue darken-1"
                     text
-                    @click="dialog = false"
+                    @click="closeDialog"
                 >
-                    Close
+                    Отменить
                 </v-btn>
                 <v-btn
                     color="blue darken-1"
                     text
-                    @click="dialog = false"
+                    @click="create"
                 >
-                    Save
+                    Добавить
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -52,12 +76,8 @@
 export default {
     name: "CreateBtn",
     props:{
-        test:{
+        typeSubject:{
             type:[Array,Object],
-            default:()=>({
-                text:'Субъект РФ1',
-                name:'province'
-            })
         },
 
     },
@@ -65,7 +85,41 @@ export default {
     },
     data:()=>({
         dialog: false,
-    })
+        name:null,
+        minD:null,
+        errors:null,
+    }),
+    computed:{
+        subject(){
+            return {
+                name:this.name,
+                type: this.typeSubject.name,
+                minD: this.minD,
+                isLoading:false
+            }
+        }
+    },
+    methods:{
+        create(){
+            axios.post(`api/${this.subject.type}`, this.subject)
+                .then(res => {
+                    this.name = null
+                    this.minD = null
+                    this.errors = null
+                })
+                .catch(err => {
+                    if(err.response){
+                        this.errors = err.response.data.errors
+                    }
+                })
+        },
+        closeDialog(){
+            this.dialog=false,
+            this.name=null
+            this.minD=null
+            this.errors=null
+        }
+    }
 }
 </script>
 

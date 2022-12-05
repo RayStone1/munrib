@@ -23,10 +23,10 @@ class NameController extends Controller
         if($data){
             $filter=app()->make(NameFilter::class,['queryParams'=>array_filter($data)]);
             $name_id=SourceRules::select('name_id')->filter($filter)->groupBy('name_id')->get();
-            $names=Name::find($name_id);
+            $names=Name::find($name_id)->sortBy('name');
         }
         else{
-            $names=Name::all();
+            $names=Name::query()->orderBy('name')->get();
         }
         return NameResource::collection($names);
     }

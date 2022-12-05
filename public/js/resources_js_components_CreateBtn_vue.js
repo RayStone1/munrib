@@ -61,25 +61,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CreateBtn",
   props: {
-    test: {
-      type: [Array, Object],
-      "default": function _default() {
-        return {
-          text: 'Субъект РФ1',
-          name: 'province'
-        };
-      }
+    typeSubject: {
+      type: [Array, Object]
     }
   },
   mounted: function mounted() {},
   data: function data() {
     return {
-      dialog: false
+      dialog: false,
+      name: null,
+      minD: null,
+      errors: null
     };
+  },
+  computed: {
+    subject: function subject() {
+      return {
+        name: this.name,
+        type: this.typeSubject.name,
+        minD: this.minD,
+        isLoading: false
+      };
+    }
+  },
+  methods: {
+    create: function create() {
+      var _this = this;
+      axios.post("api/".concat(this.subject.type), this.subject).then(function (res) {
+        _this.name = null;
+        _this.minD = null;
+        _this.errors = null;
+      })["catch"](function (err) {
+        if (err.response) {
+          _this.errors = err.response.data.errors;
+        }
+      });
+    },
+    closeDialog: function closeDialog() {
+      this.dialog = false, this.name = null;
+      this.minD = null;
+      this.errors = null;
+    }
   }
 });
 
@@ -197,7 +247,7 @@ var render = function () {
                   ]),
                   _vm._v(
                     "\n            Добавить " +
-                      _vm._s(_vm.test.text) +
+                      _vm._s(_vm.typeSubject.text) +
                       "\n        "
                   ),
                 ],
@@ -222,11 +272,78 @@ var render = function () {
         [
           _c("v-card-title", [
             _c("span", { staticClass: "text-h5" }, [
-              _vm._v("Добавить " + _vm._s(_vm.test.text)),
+              _vm._v("Добавить " + _vm._s(_vm.typeSubject.text)),
             ]),
           ]),
           _vm._v(" "),
-          _c("v-card-text", [_c("v-container", [_c("v-row")], 1)], 1),
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-container",
+                [
+                  _c("v-text-field", {
+                    staticClass: "main--input",
+                    attrs: {
+                      "auto-select-first": "",
+                      outlined: "",
+                      clearable: "",
+                      label: "Субъекты РФ",
+                    },
+                    model: {
+                      value: _vm.name,
+                      callback: function ($$v) {
+                        _vm.name = $$v
+                      },
+                      expression: "name",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    staticClass: "main--input",
+                    attrs: {
+                      items: [1, 2, 3, 4],
+                      clearable: "",
+                      label: "MinD",
+                      outlined: "",
+                    },
+                    model: {
+                      value: _vm.minD,
+                      callback: function ($$v) {
+                        _vm.minD = $$v
+                      },
+                      expression: "minD",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _vm.errors
+                    ? _c(
+                        "div",
+                        { staticClass: "errors" },
+                        _vm._l(_vm.errors, function (val, name) {
+                          return _c(
+                            "v-alert",
+                            {
+                              attrs: { dense: "", outlined: "", type: "error" },
+                            },
+                            [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(val[0]) +
+                                  "\n                    "
+                              ),
+                            ]
+                          )
+                        }),
+                        1
+                      )
+                    : _vm._e(),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "v-card-actions",
@@ -237,26 +354,18 @@ var render = function () {
                 "v-btn",
                 {
                   attrs: { color: "blue darken-1", text: "" },
-                  on: {
-                    click: function ($event) {
-                      _vm.dialog = false
-                    },
-                  },
+                  on: { click: _vm.closeDialog },
                 },
-                [_vm._v("\n                Close\n            ")]
+                [_vm._v("\n                Отменить\n            ")]
               ),
               _vm._v(" "),
               _c(
                 "v-btn",
                 {
                   attrs: { color: "blue darken-1", text: "" },
-                  on: {
-                    click: function ($event) {
-                      _vm.dialog = false
-                    },
-                  },
+                  on: { click: _vm.create },
                 },
-                [_vm._v("\n                Save\n            ")]
+                [_vm._v("\n                Добавить\n            ")]
               ),
             ],
             1
