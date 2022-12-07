@@ -1,6 +1,6 @@
 <template>
     <v-dialog
-        v-model="dialog"
+        v-model="dialog_subject"
         persistent
         max-width="600px"
     >
@@ -14,12 +14,12 @@
                 <v-icon>
                     mdi-plus-box
                 </v-icon>
-                Добавить {{typeSubject.text}}
+                Добавить субъект
             </v-btn>
         </template>
         <v-card>
             <v-card-title>
-                <span class="text-h5">Добавить {{typeSubject.text}}</span>
+                <span class="text-h5">Добавить </span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -63,7 +63,6 @@
                 <v-btn
                     color="blue darken-1"
                     text
-                    @click="create"
                 >
                     Добавить
                 </v-btn>
@@ -74,50 +73,17 @@
 
 <script>
 export default {
-    name: "CreateBtn",
-    props:{
-        typeSubject:{
-            type:[Array,Object],
-        },
-
-    },
-    mounted() {
-    },
+    name: "CreateSubject",
     data:()=>({
-        dialog: false,
+        dialog_subject: false,
         name:null,
         minD:null,
         errors:null,
     }),
-    computed:{
-        subject(){
-            return {
-                name:this.name,
-                type: this.typeSubject.name,
-                minD: this.minD,
-                isLoading:false
-            }
-        }
-    },
     methods:{
-        create(){
-            axios.post(`api/${this.subject.type}`, this.subject)
-                .then(res => {
-                    this.name = null
-                    this.minD = null
-                    this.errors = null
-                })
-                .catch(err => {
-                    if(err.response){
-                        this.errors = err.response.data.errors
-                    }
-                })
-        },
         closeDialog(){
-            this.dialog=false,
-            this.name=null
-            this.minD=null
-            this.errors=null
+            this.dialog_subject=false
+            this.name=this.minD=this.errors=null
         }
     }
 }

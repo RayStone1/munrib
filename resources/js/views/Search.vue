@@ -1,28 +1,25 @@
 <template>
     <v-container
     >
-        <v-row>
+        <v-row class="pt-8">
             <v-col
                 class="pa-8"
                 lg="4"
                 md="6"
                 cols="12"
             >
-                <search-form
-                    @create="setType"
-                />
+            <search-form
+
+            />
             </v-col>
             <v-col
                 lg="8"
                 md="6"
                 cols="12"
             >
-                <search-list
-                />
-                <create-btn
-                    v-if="type"
-                   :typeSubject="type"
-                />
+                <search-table/>
+                <create-subject/>
+                <create-source/>
             </v-col>
         </v-row>
     </v-container>
@@ -44,15 +41,13 @@ export default {
         type:null
     }),
     components:{
-        SearchList:()=>import('../components/SearchList'),
-        CreateBtn:()=>import('../components/CreateBtn'),
-        SearchForm:()=>import('../components/SearchForm')
-
+        SearchForm:()=>import('../components/search/Form'),
+        SearchTable:()=>import('../components/search/Table'),
+        CreateSubject:()=>import('../components/CreateSubject'),
+        CreateSource:()=>import('../components/CreateSource')
     },
     methods:{
-        setType(data){
-            this.type=data
-        }
+
     }
 }
 </script>

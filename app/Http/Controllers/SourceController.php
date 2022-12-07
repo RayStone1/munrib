@@ -11,7 +11,7 @@ use App\Models\Source;
 use App\Models\SourceRules;
 use Illuminate\Http\Request;
 
-class SourceController extends Controller
+class   SourceController extends Controller
 {
     /**
      * Display a listing of the resource.

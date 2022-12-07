@@ -18,6 +18,10 @@ const actions= {
                 commit('setSource',res.data.data)
             })
     },
+    async getIndexSource({commit},id){
+        const source=await axios.get(`/api/source/${id}`)
+        commit('setSource',source.data.data)
+    }
 }
 export default  {
     state,mutations,getters,actions
