@@ -84,4 +84,7 @@ input{
     color:white !important;;
     background-color: #7AA0CF;
 }
+.cursor-pointer{
+    cursor:pointer;
+}
 </style>

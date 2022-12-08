@@ -17,6 +17,7 @@ class NameResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
+            'mind'=>$this->minD,
             'synonyms'=>new SynonymResource($this->synonyms),
         ];
     }

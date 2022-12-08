@@ -53,6 +53,7 @@ export default {
     data:()=>({
         links: [
             {name:'Главная',route:'/',icon:"mdi-home"},
+            {name:'Источник',route:'/source/1',icon:"mdi-home"},
         ],
         drawer: false,
         group:''

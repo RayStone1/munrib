@@ -18,16 +18,28 @@
                 cols="12"
             >
                 <search-table/>
-                <create-subject/>
+                <v-btn
+                    class="mt-7"
+                    outlined
+                    @click="openSubject"
+                >
+                    <v-icon>
+                        mdi-plus-box
+                    </v-icon>
+                    Добавить субъект
+                </v-btn>
                 <create-source/>
+                <dialog-subject
+                    :dialog-edit="dialogCreate"
+                    @closeDialog="dialogCreate=$event"
+                />
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
-
-
+import {mapActions, mapMutations} from "vuex";
 export default {
     name: "Search",
     data:()=>({
@@ -38,15 +50,25 @@ export default {
             name:null,
         },
         result:null,
-        type:null
+        dialogCreate:false
     }),
+    mounted() {
+        this.setSource(null)
+        this.setType(null)
+    },
     components:{
         SearchForm:()=>import('../components/search/Form'),
         SearchTable:()=>import('../components/search/Table'),
-        CreateSubject:()=>import('../components/CreateSubject'),
+        DialogSubject:()=>import('../components/form/DialogSubject'),
         CreateSource:()=>import('../components/CreateSource')
     },
     methods:{
+        ...mapMutations(['setType',"setSource"]),
+        openSubject(item=false){
+            this.dialogCreate=true
+        },
+    },
+    computed:{
 
     }
 }
