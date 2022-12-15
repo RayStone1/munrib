@@ -65,6 +65,7 @@
                             outlined
                             type="error"
                             v-for="(val,name) in errors"
+                            :key="name"
                         >
                             {{ val[0] }}
                         </v-alert>

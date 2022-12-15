@@ -12,15 +12,12 @@ const mutations= {
     }
 }
 const actions= {
-    getMunTwo({state,commit,dispatch},filter){
-
-        axios.get("api/mun-two",{params:filter})
-            .then(res=>{
-                commit('setMunTwo',res.data.data)
-            })
+    async getMunTwo({state, commit, dispatch}, filter) {
+        const res = await axios.get("api/mun_two", {params: filter})
+        commit('setMunTwo',res.data.data)
     },
     createMunTwo({commit},data){
-        axios.post("api/mun-two",data)
+        axios.post("api/mun_two",data)
             .then(res=>{
 
             })

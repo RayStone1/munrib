@@ -12,11 +12,9 @@ const mutations= {
     }
 }
 const actions= {
-    getSources({state,commit,dispatch},filter){
-        axios.get("api/source",{params:filter})
-            .then(res=>{
-                commit('setSource',res.data.data)
-            })
+    async getSources({commit}, filter) {
+        const res = await axios.get("api/source", {params: filter})
+        commit('setSource', res.data.data)
     },
     async getSource({commit},id){
         const source=await axios.get(`/api/source/${id}`)

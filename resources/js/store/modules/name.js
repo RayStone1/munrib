@@ -12,11 +12,9 @@ const mutations= {
     }
 }
 const actions= {
-    getName({state,commit,dispatch},filter){
-        axios.get("api/names",{params:filter})
-            .then(res=>{
-                commit('setName',res.data.data)
-            })
+    async getName({commit}, filter) {
+        const res = await axios.get("api/names", {params: filter})
+        commit('setName', res.data.data)
     },
     createName({commit},data){
         axios.post("api/names",data)

@@ -40,7 +40,6 @@ class MunOneController extends Controller
     public function store(MunOneRequest $request)
     {
         $data=$request->validated();
-        return
         $result=MunOne::firstOrCreate($data);
         return $result;
     }

@@ -3,35 +3,36 @@
     >
         <v-row class="pt-8">
             <v-col
-                class="pa-8"
                 lg="4"
                 md="6"
                 cols="12"
             >
-            <search-form
-
-            />
+                <search-form
+                    @source_rules="setRules"
+                />
             </v-col>
             <v-col
                 lg="8"
                 md="6"
                 cols="12"
             >
-                <search-table/>
+                <search-table
+                @editItem="openSubject"
+                />
                 <v-btn
+                    v-if="!isProvinceOrSource"
                     class="mt-7"
                     outlined
-                    @click="openSubject"
+                    @click="openSubject('create')"
                 >
                     <v-icon>
                         mdi-plus-box
                     </v-icon>
                     Добавить субъект
                 </v-btn>
-                <create-source/>
                 <dialog-subject
-                    :dialog-edit="dialogCreate"
-                    @closeDialog="dialogCreate=$event"
+                    v-model="dialogSubject"
+                    :method="method"
                 />
             </v-col>
         </v-row>
@@ -39,22 +40,26 @@
 </template>
 
 <script>
-import {mapActions, mapMutations} from "vuex";
+import {mapActions, mapMutations,mapGetters} from "vuex";
 export default {
     name: "Search",
     data:()=>({
-        source_rules:{
-            province:null,
-            mun_one:null,
-            mun_two:null,
+        source_rules:null,
+        dialogSubject:false,
+        dialogCreate:false,
+        editedSubject:{
             name:null,
+            minD:null
         },
-        result:null,
-        dialogCreate:false
+        defaultSubject:{
+            name:null,
+            minD:null
+        },
+        method:null,
     }),
     mounted() {
         this.setSource(null)
-        this.setType(null)
+
     },
     components:{
         SearchForm:()=>import('../components/search/Form'),
@@ -62,15 +67,24 @@ export default {
         DialogSubject:()=>import('../components/form/DialogSubject'),
         CreateSource:()=>import('../components/CreateSource')
     },
-    methods:{
-        ...mapMutations(['setType',"setSource"]),
-        openSubject(item=false){
-            this.dialogCreate=true
-        },
-    },
     computed:{
+        ...mapGetters(['province','mun_one',"mun_two","name","source","activeType"]),
+        isProvinceOrSource(){
+            return this.activeType=='province' || this.activeType=='source'
+        }
+    },
+    methods:{
+        ...mapMutations(["setSource"]),
+        openSubject(method,item){
+            this.editedSubject=item??this.defaultSubject
+            this.method=method
+            this.dialogSubject=true
+        },
+        setRules(val){
+            this.source_rules=val
+        }
+    },
 
-    }
 }
 </script>
 

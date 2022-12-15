@@ -4,7 +4,7 @@
             class="pa-4"
             elevation="3"
             rounded="lg"
-            v-if="source"
+            v-if="source!=null"
         >
             <div class="py-2">
                 <v-card-subtitle class="py-0">
@@ -77,18 +77,25 @@
                     <v-card-subtitle>В этих карточках можно изменять их название и синонимы</v-card-subtitle>
                 </div>
                 <div class="action" v-if="activeType!='province'">
+
+                        <v-icon
+                            color="white"
+                            class="ma-2 pa-2"
+                            @click="openDialog('create')"
+                        >
+                            mdi-plus-box
+                        </v-icon>
                     <v-icon
                         color="white"
-                        class="ma-4 pa-2"
-                        @click="openEdit(subject)"
+                        class="ma-2 pa-2"
+                        @click="openDialog('edit',subject)"
                     >
                         mdi-pencil
                     </v-icon>
                     <dialog-subject
-                        v-if="editedSubject"
-                        :dialog-edit="dialogEdit"
-                        :edited-item="editedSubject"
-                        @closeDialog="dialogEdit=$event"
+                        v-model="dialogSubject"
+                        :item="editedSubject"
+                        :method="method"
                     />
                 </div>
             </div>
@@ -112,12 +119,15 @@
                             </v-list-item-content>
                             <v-list-item-icon>
                                 <v-icon
-                                    class=""
-                                    @click="openEdit(item)"
+                                    class="pa-2"
+                                    @click="openDialog('edit',item,true)"
                                 >
                                     mdi-pencil
                                 </v-icon>
-                                <v-icon>
+                                <v-icon
+                                    class="pa-2"
+                                >
+
                                     mdi-delete
                                 </v-icon>
                             </v-list-item-icon>
@@ -136,32 +146,39 @@ export default {
     name: "Source",
     data:()=>({
         subject:null,
-        editedSubject:null,
-        dialogEdit:false,
+        editedSubject:{
+            name:null,
+            mind:null
+        },
+        defaultSubject:{
+            name:null,
+            mind:null
+        },
+        method:null,
+        dialogSubject:false,
     }),
-    mounted() {
-        this.setType(null)
-        this.setSource(null)
-        this.getSource(this.$route.params.id)
-    },
-
-    deactivated(){
-
+    async created(){
+        await this.setSource(null)
+        await this.setType(null)
+        await this.getSource(this.$route.params.id)
     },
     computed:{
-        ...mapGetters(['source','activeType'])
+        ...mapGetters(['source','activeType']),
     },
     methods:{
         ...mapActions(['getSource']),
-        ...mapMutations(['setType',"setSource"]),
+        ...mapMutations(['setType',"setSource","setSynonym"]),
         setSubject(type,subject){
             this.setType(type)
             this.subject=subject
         },
-        openEdit(item){
-            this.editedSubject=item
-            this.dialogEdit=true
-        },
+        openDialog(method,item=false,synonym=false){
+            this.method=method
+            this.editedSubject=item??this.defaultSubject
+            this.setSynonym(synonym)
+            console.log()
+            this.dialogSubject=true
+        }
     },
     components:{
         DialogSubject:()=>import('../components/form/DialogSubject'),

@@ -11,6 +11,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46,13 +71,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Table",
+  props: {},
   data: function data() {
     return {
       dialog: false,
       search: null,
+      result: [],
       dialogDelete: false,
+      page: 1,
+      pageCount: 0,
+      itemsPerPage: 10,
       headers: [{
         text: 'Наименование',
         align: 'start',
@@ -63,213 +94,39 @@ __webpack_require__.r(__webpack_exports__);
         sortable: false,
         align: 'end'
       }],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      }
+      editedIndex: -1
     };
   },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+  methods: {
+    openEdit: function openEdit(item) {
+      this.$emit('editItem', item);
     }
   },
   watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    },
-    dialogDelete: function dialogDelete(val) {
-      val || this.closeDelete();
+    activeType: function activeType(val) {
+      switch (val) {
+        case "province":
+          this.result = this.province;
+          break;
+        case "mun_one":
+          this.result = this.mun_one;
+          break;
+        case "mun_two":
+          this.result = this.mun_two;
+          break;
+        case "name":
+          this.result = this.name;
+          break;
+        case "source":
+          this.result = this.source;
+          break;
+      }
     }
   },
-  created: function created() {
-    this.initialize();
-  },
-  methods: {
-    initialize: function initialize() {
-      this.desserts = [{
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0
-      }, {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3
-      }, {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0
-      }, {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3
-      }, {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9
-      }, {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0
-      }, {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }];
-    },
-    editItem: function editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-    deleteItem: function deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
-    },
-    deleteItemConfirm: function deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1);
-      this.closeDelete();
-    },
-    close: function close() {
-      var _this = this;
-      this.dialog = false;
-      this.$nextTick(function () {
-        _this.editedItem = Object.assign({}, _this.defaultItem);
-        _this.editedIndex = -1;
-      });
-    },
-    closeDelete: function closeDelete() {
-      var _this2 = this;
-      this.dialogDelete = false;
-      this.$nextTick(function () {
-        _this2.editedItem = Object.assign({}, _this2.defaultItem);
-        _this2.editedIndex = -1;
-      });
-    },
-    save: function save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
-      this.close();
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['province', 'mun_one', "mun_two", "name", "source", "activeType"])),
+  components: {
+    CreateSource: function CreateSource() {
+      return __webpack_require__.e(/*! import() */ "resources_js_components_CreateSource_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../CreateSource */ "./resources/js/components/CreateSource.vue"));
     }
   }
 });
@@ -362,6 +219,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
+    { staticStyle: { "box-shadow": "unset" } },
     [
       _c(
         "v-card-title",
@@ -381,53 +239,120 @@ var render = function () {
               expression: "search",
             },
           }),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c("create-source"),
         ],
         1
       ),
       _vm._v(" "),
       _c("v-data-table", {
+        staticStyle: { "min-height": "60vh" },
         attrs: {
           headers: _vm.headers,
-          items: _vm.desserts,
+          items: _vm.result,
           search: _vm.search,
+          page: _vm.page,
+          "hide-default-footer": "",
         },
-        scopedSlots: _vm._u([
-          {
-            key: "item.actions",
-            fn: function (ref) {
-              var item = ref.item
-              return [
-                _c(
-                  "v-icon",
-                  {
-                    staticClass: "mr-2",
-                    attrs: { small: "" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.editItem(item)
-                      },
-                    },
-                  },
-                  [_vm._v("\n                mdi-pencil\n            ")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-icon",
-                  {
-                    attrs: { small: "" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.deleteItem(item)
-                      },
-                    },
-                  },
-                  [_vm._v("\n                mdi-delete\n            ")]
-                ),
-              ]
-            },
+        on: {
+          "update:page": function ($event) {
+            _vm.page = $event
           },
-        ]),
+          "page-count": function ($event) {
+            _vm.pageCount = $event
+          },
+        },
+        scopedSlots: _vm._u(
+          [
+            _vm.activeType == "source"
+              ? {
+                  key: "item.name",
+                  fn: function (ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: { name: "source", params: { id: item.id } },
+                          },
+                        },
+                        [
+                          _c("p", [
+                            _c("span", [
+                              _vm._v(_vm._s(item.rules.province.name)),
+                            ]),
+                            _vm._v("/\n                    "),
+                            _c("span", [
+                              _vm._v(_vm._s(item.rules.mun_one.name)),
+                            ]),
+                            _vm._v("/\n                    "),
+                            item.rules.mun_two
+                              ? _c("span", [
+                                  _vm._v(_vm._s(item.rules.mun_two.name) + "/"),
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("span", [_vm._v(_vm._s(item.rules.name.name))]),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  },
+                }
+              : null,
+            _vm.activeType != "province"
+              ? {
+                  key: "item.actions",
+                  fn: function (ref) {
+                    var item = ref.item
+                    return [
+                      _c(
+                        "v-icon",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { small: "" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.openEdit(item)
+                            },
+                          },
+                        },
+                        [_vm._v("\n                mdi-pencil\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c("v-icon", { attrs: { small: "" } }, [
+                        _vm._v("\n                mdi-delete\n            "),
+                      ]),
+                    ]
+                  },
+                }
+              : null,
+          ],
+          null,
+          true
+        ),
       }),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "text-center pt-2" },
+        [
+          _c("v-pagination", {
+            attrs: { length: _vm.pageCount },
+            model: {
+              value: _vm.page,
+              callback: function ($$v) {
+                _vm.page = $$v
+              },
+              expression: "page",
+            },
+          }),
+        ],
+        1
+      ),
     ],
     1
   )

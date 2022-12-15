@@ -32,7 +32,8 @@ class MunOneSynonymController extends Controller
         $data=$request->validated();
         $result=MunOneSyn::firstOrCreate([
             'l1_id'=>$mun_one->id,
-            'name'=>$data['name']
+            'name'=>$data['name'],
+            'minD'=>$data['minD'],
         ]);
         return $result;
     }

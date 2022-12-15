@@ -1,12 +1,12 @@
 <template>
     <v-dialog
-        v-model="dialogEdit"
+        v-model="value"
         persistent
         max-width="600px"
     >
         <v-card>
             <v-card-title>
-                <span class="text-h5">Добавить </span>
+                <span class="text-h5">{{title}} </span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -16,15 +16,15 @@
                         outlined
                         clearable
                         label="Субъекты РФ"
-                        v-model="editedItem.name"
+                        v-model="name"
                     ></v-text-field>
                     <v-select
                         class="main--input"
                         :items="[1,2,3,4]"
                         clearable
                         label="MinD"
+                        v-model="minD"
                         outlined
-                        v-model="editedItem.mind"
                     ></v-select>
                     <div v-if="errors" class="errors">
                         <v-alert
@@ -32,6 +32,8 @@
                             outlined
                             type="error"
                             v-for="(val,name) in errors"
+                            :key="name"
+
                         >
                             {{ val[0] }}
                         </v-alert>
@@ -43,15 +45,16 @@
                 <v-btn
                     color="blue darken-1"
                     text
-                    @click="dialog=false"
+                    @click="closeDialog()"
                 >
                     Отменить
                 </v-btn>
                 <v-btn
                     color="blue darken-1"
                     text
+                    @click="sendRequest"
                 >
-                    Добавить
+                    {{ title }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -59,38 +62,63 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "DialogSubject",
     props:{
-        dialogEdit:{
+        value:{
             type:Boolean,
         },
-        editedItem:{
-            type:Object,
-            default(){
-                return {
-                    name:null,
-                    mind:null
-                }
-
-            }
+        method:{
+            type:String
+        },
+        item:{
+            type:Object
         }
     },
     data:()=>({
         errors:null,
-
+        name:null,
+        minD:null,
+        parent_id:null,
     }),
     methods: {
+        closeDialog(){
+            this.$emit('input',false)
+            this.name=this.minD=this.errors=null
+        },
+        sendRequest(){
+            let type=this.activeType,
+                method=this.method=='edit'?'PUT':'POST',
+                url
+            switch (this.method) {
+                case "create":
+                    url=`/api/${type}`
+                    break
+            }
+            console.log(url)
+            axios({
+                method,
+                url,
+                data:{
+                    name:this.name,
+                    minD:this.minD
+                }
+            })
+                .then(res=>{
+                    console.log(res)
+                })
+                .catch(err=>{
+                    this.errors=err.response.data.errors
+                })
+        }
     },
     computed:{
-        dialog:{
-            get(){
-                return this.dialogEdit;
-            },
-            set(val){
-                this.$emit('closeDialog',val)
-            }
-        }
+        ...mapGetters(['activeType',"synonym"]),
+        title(){
+            return this.method=='edit'?'Изменить' : 'Добавить'
+        },
     }
 }
 </script>

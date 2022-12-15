@@ -50,7 +50,6 @@ class MunTwoController extends Controller
     public function store(MunTwoRequest $request)
     {
         $data=$request->validated();
-        return $data;
         $result=MunTwo::firstOrCreate($data);
         return $result;
     }
