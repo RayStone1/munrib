@@ -1,20 +1,20 @@
 const state= {
-    Allprovince:null
+    province_list:null
 }
 const getters= {
-    Allprovince:state=>{
-        return state.Allprovince
+    province_list:state=>{
+        return state.province_list
     }
 }
 const mutations= {
-    setProvince(state,Allprovince){
-        state.Allprovince=Allprovince
+    setProvinceList(state,province){
+        state.province_list=province
     }
 }
 const actions= {
-    async getProvince({commit}){
+    async getProvinceList({commit}){
         const res=await axios.get("api/province")
-        commit('setProvince',res.data.data)
+        commit('setProvinceList',res.data.data)
     },
 }
 export default  {

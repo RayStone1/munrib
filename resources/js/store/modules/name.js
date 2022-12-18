@@ -1,20 +1,20 @@
 const state= {
-    Allname:null
+    name_list:null
 }
 const getters= {
-    Allname:state=>{
-        return state.Allname
+    name_list:state=>{
+        return state.name_list
     }
 }
 const mutations= {
-    setName(state,Allname){
-        state.Allname=Allname
+    setNameList(state,name){
+        state.name_list=name
     }
 }
 const actions= {
-    async getName({commit}) {
+    async getNameList({commit}) {
         const res = await axios.get("api/names")
-        commit('setName', res.data.data)
+        commit('setNameList', res.data.data)
     },
 }
 export default  {

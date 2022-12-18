@@ -13,6 +13,7 @@ class SourceRules extends Model
     protected $table="fs_source_rules";
     public $timestamps=false;
     protected $primaryKey='source_id';
+    protected $guarded=false;
 
     public function province()
     {

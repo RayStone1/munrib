@@ -7,6 +7,10 @@ use App\Http\Requests\SourceRequest;
 use App\Http\Resources\SearchSourceResource;
 use App\Http\Resources\SourceResource;
 use App\Http\Resources\SourcesResources;
+use App\Models\MunOne;
+use App\Models\MunTwo;
+use App\Models\Name;
+use App\Models\Province;
 use App\Models\Source;
 use App\Models\SourceRules;
 use Illuminate\Http\Request;
@@ -43,9 +47,23 @@ class   SourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SourceRequest $request)
     {
-        //
+        $data=$request->validated();
+        $province=Province::find($data['province_id'])->name;
+        $mun_one=MunOne::find($data['l1_id'])->name;
+        $mun_two=MunTwo::find($data['l2_id'])->name;
+        $name=Name::find($data['name_id'])->name;
+        $source_name="$province/$mun_one/$mun_two/$name";
+        $result=Source::firstOrCreate([
+            'name'=>$source_name,
+            'topic_name'=>$data['topic_name'],
+            'header_name'=>$data['header_name']
+        ]);
+        unset($data['topic_name'],$data['header_name']);
+        $data['source_id']=$result['id'];
+        $rules=SourceRules::firstOrCreate($data);
+        return $rules;
     }
 
     /**

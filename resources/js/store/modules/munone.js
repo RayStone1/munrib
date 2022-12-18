@@ -1,20 +1,20 @@
 const state= {
-    Allmun_one:null
+    mun_one_list:null
 }
 const getters= {
-    Allmun_one:state=>{
-        return state.Allmun_one
+    mun_one_list:state=>{
+        return state.mun_one_list
     }
 }
 const mutations= {
-    setMunOne(state,Allmun_one){
-        state.Allmun_one=Allmun_one
+    setMunOneList(state,mun_one){
+        state.mun_one_list=mun_one
     }
 }
 const actions= {
-    async getMunOne({commit}){
-        const res=await axios.get("api/mun_one")
-        commit('setMunOne',res.data.data)
+    async getMunOneList({commit}){
+        const res=await axios.get("api/mun-one")
+        commit('setMunOneList',res.data.data)
     }
 }
 export default  {

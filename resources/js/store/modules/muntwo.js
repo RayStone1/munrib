@@ -1,29 +1,21 @@
 const state= {
-    Allmun_two:null
+    mun_two_list:null
 }
 const getters= {
-    Allmun_two:state=>{
-        return state.Allmun_two
+    mun_two_list:state=>{
+        return state.mun_two_list
     }
 }
 const mutations= {
-    setMunTwo(state,Allmun_two){
-        state.Allmun_two=Allmun_two
+    setMunTwoList(state,mun_two){
+        state.mun_two_list=mun_two
     }
 }
 const actions= {
-    async getMunTwo({state, commit, dispatch}) {
-        const res = await axios.get("api/mun_two",)
-        commit('setMunTwo',res.data.data)
+    async getMunTwoList({commit}) {
+        const res = await axios.get("api/mun-two",)
+        commit('setMunTwoList',res.data.data)
     },
-    createMunTwo({commit},data){
-        axios.post("api/mun_two",data)
-            .then(res=>{
-
-            })
-            .catch(e=>{
-            })
-    }
 }
 export default  {
     state,mutations,getters,actions

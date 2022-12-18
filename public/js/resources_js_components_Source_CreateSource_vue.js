@@ -105,6 +105,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -121,12 +131,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       header_name: null
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["getProvince", "getMunOne", "getMunTwo", "getName", "getSources", "ActiveType"])), {}, {
+  mounted: function mounted() {
+    this.start();
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["getProvinceList", "getMunOneList", "getMunTwoList", "getNameList", "getSources", "ActiveType"])), {}, {
+    create: function create() {
+      axios.post("/api/source", this.source).then(function (res) {
+        console.log(res);
+      });
+    },
     closeDialog: function closeDialog() {
       this.$emit('input', false);
+    },
+    start: function start() {
+      this.getMunOneList();
+      this.getProvinceList();
+      this.getMunTwoList();
+      this.getNameList();
     }
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['Allname', "Allprovince", "Allmun_two", "Allmun_one"])), {}, {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['name_list', "province_list", "mun_two_list", "mun_one_list"])), {}, {
     ACTIVE_PROVINCE: {
       get: function get() {
         return this.$store.getters.ACTIVE_PROVINCE;
@@ -158,8 +182,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       set: function set(value) {
         this.$store.commit('setActiveName', value);
       }
+    },
+    source: function source() {
+      return {
+        name_id: this.ACTIVE_NAME,
+        l1_id: this.ACTIVE_MUNONE,
+        l2_id: this.ACTIVE_MUNTWO,
+        province_id: this.ACTIVE_PROVINCE,
+        topic_name: this.topic_name,
+        header_name: this.header_name
+      };
     }
-  })
+  }),
+  watch: {
+    value: function value(val) {
+      !val || this.start();
+    }
+  }
 });
 
 /***/ }),
@@ -283,7 +322,7 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Субъекты РФ",
-                      items: _vm.Allprovince,
+                      items: _vm.province_list,
                       "item-text": "name",
                       "item-value": "id",
                     },
@@ -303,6 +342,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Муниципальные образования 1ого уровня",
+                      items: _vm.mun_one_list,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                     model: {
                       value: _vm.ACTIVE_MUNONE,
@@ -320,6 +362,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Муниципальные образования 2ого уровня",
+                      items: _vm.mun_two_list,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                     model: {
                       value: _vm.ACTIVE_MUNTWO,
@@ -337,6 +382,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Орган власти",
+                      items: _vm.name_list,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                     model: {
                       value: _vm.ACTIVE_NAME,
@@ -413,9 +461,14 @@ var render = function () {
                 [_vm._v("\n                Отменить\n            ")]
               ),
               _vm._v(" "),
-              _c("v-btn", { attrs: { color: "blue darken-1", text: "" } }, [
-                _vm._v("\n                Добавить\n            "),
-              ]),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "blue darken-1", text: "" },
+                  on: { click: _vm.create },
+                },
+                [_vm._v("\n                Добавить\n            ")]
+              ),
             ],
             1
           ),

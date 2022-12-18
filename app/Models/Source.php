@@ -11,6 +11,7 @@ class Source extends Model
     use Filterable;
     protected $table="fs_sources";
     public $timestamps=false;
+    protected $guarded=false;
 
     public function rules()
     {

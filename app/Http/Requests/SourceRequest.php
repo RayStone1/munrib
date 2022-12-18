@@ -24,10 +24,28 @@ class SourceRequest extends FormRequest
     public function rules()
     {
         return [
-            'province'=>'integer|nullable',
-            'mun_one'=>'integer|nullable',
-            'mun_two'=>'integer|nullable',
-            'name'=>'integer|nullable',
+            'province_id'=>'required|integer',
+            'l1_id'=>'required|integer',
+            'l2_id'=>'integer|nullable',
+            'name_id'=>'required|integer',
+            'topic_name'=>'required|string',
+            'header_name'=>'required|string',
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'province'=>'Субъект РФ',
+            'mun_one'=>'МО 1',
+            'mun_two'=>'МО 2',
+            'name'=>'Орган власти',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'unique' => 'Такой субъект уже существует',
+            'required'=>':attribute обязательное поле'
         ];
     }
 }

@@ -36,10 +36,10 @@ Route::resource('mun-one.synonym',MunOneSynonymController::class)->except(['edit
 Route::resource('mun-two',MunTwoController::class)->only(['show','index','store','update']);
 Route::resource('mun-two.synonym',MunTwoSynonymController::class)->except(['edit','create'])->scoped();
 
-Route::resource('names',NameController::class)->only(['show','index','store']);
+Route::resource('names',NameController::class)->only(['show','index','store','update']);
 Route::resource('names.synonym',NameSynonymController::class)->except(['edit','create'])->scoped();
 
 Route::resource('province',ProvinceController::class)->only(['show','index']);
 
 
-Route::resource('source',SourceController::class)->only(['show','index']);
+Route::resource('source',SourceController::class)->except(['edit','create'])->scoped();

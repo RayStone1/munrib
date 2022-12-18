@@ -16,7 +16,7 @@
                         outlined
                         clearable
                         label="Субъекты РФ"
-                        :items="Allprovince"
+                        :items="province_list"
                         item-text="name"
                         item-value="id"
                         v-model="ACTIVE_PROVINCE"
@@ -27,6 +27,9 @@
                         outlined
                         clearable
                         label="Муниципальные образования 1ого уровня"
+                        :items="mun_one_list"
+                        item-text="name"
+                        item-value="id"
                         v-model="ACTIVE_MUNONE"
                     ></v-autocomplete>
                     <v-autocomplete
@@ -35,6 +38,9 @@
                         outlined
                         clearable
                         label="Муниципальные образования 2ого уровня"
+                        :items="mun_two_list"
+                        item-text="name"
+                        item-value="id"
                         v-model="ACTIVE_MUNTWO"
                     ></v-autocomplete>
                     <v-autocomplete
@@ -43,6 +49,9 @@
                         outlined
                         clearable
                         label="Орган власти"
+                        :items="name_list"
+                        item-text="name"
+                        item-value="id"
                         v-model="ACTIVE_NAME"
                     ></v-autocomplete>
                     <v-text-field
@@ -80,6 +89,7 @@
                 <v-btn
                     color="blue darken-1"
                     text
+                    @click="create"
                 >
                     Добавить
                 </v-btn>
@@ -104,25 +114,40 @@ export default {
         topic_name:null,
         header_name:null,
     }),
+    mounted() {
+        this.start()
+    },
     methods:{
         ...mapActions([
-            "getProvince",
-            "getMunOne",
-            "getMunTwo",
-            "getName",
+            "getProvinceList",
+            "getMunOneList",
+            "getMunTwoList",
+            "getNameList",
             "getSources",
             "ActiveType"
         ]),
+        create(){
+            axios.post(`/api/source`,this.source)
+                .then(res=>{
+                    console.log(res)
+                })
+        },
         closeDialog(){
             this.$emit('input',false)
+        },
+        start(){
+            this.getMunOneList()
+            this.getProvinceList()
+            this.getMunTwoList()
+            this.getNameList()
         }
     },
     computed:{
         ...mapGetters([
-            'Allname',
-            "Allprovince",
-            "Allmun_two",
-            "Allmun_one"
+            'name_list',
+            "province_list",
+            "mun_two_list",
+            "mun_one_list",
 
         ]),
         ACTIVE_PROVINCE:{
@@ -141,6 +166,21 @@ export default {
             get() { return this.$store.getters.ACTIVE_NAME; },
             set(value) { this.$store.commit('setActiveName', value); },
         },
+        source(){
+            return {
+                name_id:this.ACTIVE_NAME,
+                l1_id:this.ACTIVE_MUNONE,
+                l2_id:this.ACTIVE_MUNTWO,
+                province_id:this.ACTIVE_PROVINCE,
+                topic_name:this.topic_name,
+                header_name:this.header_name
+            }
+        }
+    },
+    watch:{
+        value(val){
+            !val|| this.start()
+        }
     }
 }
 </script>
