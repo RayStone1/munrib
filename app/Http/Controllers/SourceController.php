@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\SourceFilter;
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\SourceRequest;
 use App\Http\Resources\SearchSourceResource;
 use App\Http\Resources\SourceResource;
@@ -22,7 +23,7 @@ class   SourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(SourceRequest $request)
+    public function index(SearchRequest $request)
     {
 
         $data=$request->validated();
@@ -52,9 +53,9 @@ class   SourceController extends Controller
         $data=$request->validated();
         $province=Province::find($data['province_id'])->name;
         $mun_one=MunOne::find($data['l1_id'])->name;
-        $mun_two=MunTwo::find($data['l2_id'])->name;
+        $mun_two=MunTwo::find($data['l2_id'])->name??false;
         $name=Name::find($data['name_id'])->name;
-        $source_name="$province/$mun_one/$mun_two/$name";
+        $source_name=$mun_two?"$province/$mun_one/$mun_two/$name":"$province/$mun_one/$name";
         $result=Source::firstOrCreate([
             'name'=>$source_name,
             'topic_name'=>$data['topic_name'],
@@ -62,6 +63,7 @@ class   SourceController extends Controller
         ]);
         unset($data['topic_name'],$data['header_name']);
         $data['source_id']=$result['id'];
+        $data['l2_id']=$data['l2_id']??0;
         $rules=SourceRules::firstOrCreate($data);
         return $rules;
     }

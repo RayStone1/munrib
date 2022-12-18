@@ -26,7 +26,7 @@ class SourceRequest extends FormRequest
         return [
             'province_id'=>'required|integer',
             'l1_id'=>'required|integer',
-            'l2_id'=>'integer|nullable',
+            'l2_id'=>'nullable',
             'name_id'=>'required|integer',
             'topic_name'=>'required|string',
             'header_name'=>'required|string',
