@@ -86,54 +86,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     value: {
       type: Boolean
     },
-    method: {
-      type: String
-    },
     item: {
-      type: Object
+      type: Object,
+      "default": function _default() {
+        return {
+          name: null,
+          mind: null
+        };
+      }
     }
+    // typeItem:{
+    //     type:Object
+    // },
   },
+
   data: function data() {
     return {
-      errors: null,
-      name: null,
-      minD: null,
-      parent_id: null
+      errors: null
     };
   },
+  mounted: function mounted() {},
   methods: {
     closeDialog: function closeDialog() {
       this.$emit('input', false);
-      this.name = this.minD = this.errors = null;
+      this.errors = null;
     },
-    sendRequest: function sendRequest() {
-      var _this = this;
-      var type = this.activeType,
-        method = this.method == 'edit' ? 'PUT' : 'POST',
-        url;
-      switch (this.method) {
-        case "create":
-          url = "/api/".concat(type);
-          break;
+    getUrl: function getUrl() {
+      var method = this.method,
+        isSynonym = this.synonym,
+        parent_id = this.item.l1_id || this.item.l2_id || this.item.name_id || null,
+        type = this.activeType;
+      var url = "/api/".concat(type);
+      if (method == "POST") {
+        if (isSynonym) url += "/".concat(this.item.id, "/synonym");
+      } else {
+        if (isSynonym) url += "/".concat(this.item.id);
       }
-      console.log(url);
-      axios({
-        method: method,
-        url: url,
-        data: {
-          name: this.name,
-          minD: this.minD
-        }
-      }).then(function (res) {
-        console.log(res);
-      })["catch"](function (err) {
-        _this.errors = err.response.data.errors;
-      });
+      return url;
+    },
+    send: function send() {
+      console.log(this.getUrl());
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['activeType', "synonym"])), {}, {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['activeType', "synonym", 'method'])), {}, {
     title: function title() {
-      return this.method == 'edit' ? 'Изменить' : 'Добавить';
+      return this.method == 'POST' ? 'Добавить' : 'Изменить';
+    },
+    editeditem: {
+      get: function get() {
+        return this.item;
+      },
+      set: function set(val) {
+        this.$emit('editItem', val);
+      }
     }
   })
 });
@@ -261,11 +266,11 @@ var render = function () {
                       label: "Субъекты РФ",
                     },
                     model: {
-                      value: _vm.name,
+                      value: _vm.item.name,
                       callback: function ($$v) {
-                        _vm.name = $$v
+                        _vm.$set(_vm.item, "name", $$v)
                       },
-                      expression: "name",
+                      expression: "item.name",
                     },
                   }),
                   _vm._v(" "),
@@ -278,11 +283,11 @@ var render = function () {
                       outlined: "",
                     },
                     model: {
-                      value: _vm.minD,
+                      value: _vm.item.mind,
                       callback: function ($$v) {
-                        _vm.minD = $$v
+                        _vm.$set(_vm.item, "mind", $$v)
                       },
-                      expression: "minD",
+                      expression: "item.mind",
                     },
                   }),
                   _vm._v(" "),
@@ -338,7 +343,7 @@ var render = function () {
                 "v-btn",
                 {
                   attrs: { color: "blue darken-1", text: "" },
-                  on: { click: _vm.sendRequest },
+                  on: { click: _vm.send },
                 },
                 [
                   _vm._v(

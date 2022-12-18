@@ -1,14 +1,14 @@
 const state= {
-    province:null
+    Allprovince:null
 }
 const getters= {
-    province:state=>{
-        return state.province
+    Allprovince:state=>{
+        return state.Allprovince
     }
 }
 const mutations= {
-    setProvince(state,province){
-        state.province=province
+    setProvince(state,Allprovince){
+        state.Allprovince=Allprovince
     }
 }
 const actions= {

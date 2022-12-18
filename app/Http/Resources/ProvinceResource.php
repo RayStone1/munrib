@@ -18,6 +18,7 @@ class ProvinceResource extends JsonResource
             'id'=>$this->id,
             'name'=>$this->name,
             'mind'=>$this->mind,
+            'type'=>'province'
         ];
     }
 }

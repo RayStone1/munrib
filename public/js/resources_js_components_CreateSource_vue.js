@@ -11,6 +11,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -106,19 +122,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "CreateSource",
   data: function data() {
     return {
       dialog_source: false,
-      name: null,
-      minD: null,
       errors: null
     };
   },
-  methods: {
+  mounted: function mounted() {
+    this.load();
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['getProvince', "getMunOne", "getMunTwo", "getName"])), {}, {
     closeDialog: function closeDialog() {
       this.dialog_source = false, this.errors = null;
+    },
+    load: function load() {
+      this.getProvince();
+      this.getMunOne();
+      this.getMunTwo();
+      this.getName();
+    }
+  }),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['province', 'mun_one', "mun_two", "name"])),
+  watch: {
+    dialog_source: function dialog_source(val) {
+      this.load();
     }
   }
 });
@@ -275,6 +305,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Субъекты РФ",
+                      items: _vm.province,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                   }),
                   _vm._v(" "),
@@ -285,6 +318,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Муниципальные образования 1ого уровня",
+                      items: _vm.mun_one,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                   }),
                   _vm._v(" "),
@@ -295,6 +331,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Муниципальные образования 2ого уровня",
+                      items: _vm.mun_two,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                   }),
                   _vm._v(" "),
@@ -305,6 +344,9 @@ var render = function () {
                       outlined: "",
                       clearable: "",
                       label: "Орган власти",
+                      items: _vm.name,
+                      "item-text": "name",
+                      "item-value": "id",
                     },
                   }),
                   _vm._v(" "),

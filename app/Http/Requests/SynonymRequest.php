@@ -25,7 +25,21 @@ class SynonymRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'minD'=>'nullable'
+            'minD'=>'required'
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'name'=>'Синоним',
+            'minD'=>'MinD',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'unique' => 'Такой субъект уже существует',
+            'required'=>':attribute обязательное поле'
         ];
     }
 }

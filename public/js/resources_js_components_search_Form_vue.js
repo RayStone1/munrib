@@ -1,9 +1,9 @@
 "use strict";
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_components_search_Form_vue"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_components_Search_Form_vue"],{
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/Form.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Search/Form.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/Form.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Search/Form.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -94,15 +94,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Form",
+  mounted: function mounted() {
+    this.ActiveType(null);
+    this.findProvince();
+    this.clear('province');
+  },
   data: function data() {
-    return {
-      source_rules: {
-        province: null,
-        mun_one: null,
-        mun_two: null,
-        name: null
-      }
-    };
+    return {};
   },
   watch: {
     source_rules: {
@@ -111,36 +109,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       deep: true
     },
-    'source_rules.province': function source_rulesProvince(val) {
-      !val || this.setMunOne();
+    ACTIVE_PROVINCE: function ACTIVE_PROVINCE(val) {
+      !val || this.findMunOne();
     },
-    'source_rules.mun_one': function source_rulesMun_one(val) {
-      !val || this.setMunTwo();
+    ACTIVE_MUNONE: function ACTIVE_MUNONE(val) {
+      !val || this.findMunTwo();
     },
-    'source_rules.mun_two': function source_rulesMun_two(val) {
-      !val || this.setName();
+    ACTIVE_MUNTWO: function ACTIVE_MUNTWO(val) {
+      !val || this.findName();
     }
-    // 'source_rules.name':function (val){
-    //     !val || this.setType('mun_one')
-    // },
   },
-  mounted: function mounted() {
-    this.setProvince();
-  },
-  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapMutations)(['setType'])), (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['getProvince', "getMunOne", "getMunTwo", "getName", "getSources"])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["getProvince", "getMunOne", "getMunTwo", "getName", "getSources", "ActiveType"])), {}, {
     clear: function clear(type) {
       switch (type) {
         case "province":
-          this.source_rules.province = null;
-        case "mun_one":
-          this.source_rules.mun_one = null;
-        case "mun_two":
-          this.source_rules.mun_two = null;
+          this.ACTIVE_PROVINCE = null;
+        case "mun-one":
+          this.ACTIVE_MUNONE = null;
+        case "mun-two":
+          this.ACTIVE_MUNTWO = null;
         case "name":
-          this.source_rules.name = null;
+          this.ACTIVE_NAME = null;
       }
     },
-    setSource: function setSource() {
+    findProvince: function findProvince() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -148,9 +140,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.getSources(_this.source_rules);
+                return _this.getProvince();
               case 2:
-                _this.setType('source');
+                _this.ActiveType("province");
               case 3:
               case "end":
                 return _context.stop();
@@ -159,7 +151,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee);
       }))();
     },
-    setProvince: function setProvince() {
+    findMunOne: function findMunOne() {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -167,9 +159,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return _this2.getProvince();
+                return _this2.getMunOne();
               case 2:
-                _this2.setType('province');
+                _this2.ActiveType("mun-one");
               case 3:
               case "end":
                 return _context2.stop();
@@ -178,7 +170,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee2);
       }))();
     },
-    setMunOne: function setMunOne() {
+    findMunTwo: function findMunTwo() {
       var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
@@ -186,10 +178,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return _this3.getMunOne(_this3.source_rules);
+                return _this3.getMunTwo();
               case 2:
-                _this3.setType('mun_one');
-              case 3:
+                if (!(Object.keys(_this3.mun_two) == 0)) {
+                  _context3.next = 5;
+                  break;
+                }
+                _this3.findName();
+                return _context3.abrupt("return");
+              case 5:
+                _this3.ActiveType("mun-two");
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -197,7 +196,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee3);
       }))();
     },
-    setMunTwo: function setMunTwo() {
+    findName: function findName() {
       var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -205,17 +204,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return _this4.getMunTwo(_this4.source_rules);
+                return _this4.getName();
               case 2:
-                if (!(Object.keys(_this4.mun_two) == 0)) {
-                  _context4.next = 5;
-                  break;
-                }
-                _this4.setName();
-                return _context4.abrupt("return");
-              case 5:
-                _this4.setType('mun_two');
-              case 6:
+                _this4.ActiveType("names");
+              case 3:
               case "end":
                 return _context4.stop();
             }
@@ -223,7 +215,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee4);
       }))();
     },
-    setName: function setName() {
+    findSource: function findSource() {
       var _this5 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
@@ -231,9 +223,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return _this5.getName(_this5.source_rules);
+                return _this5.getSources();
               case 2:
-                _this5.setType('name');
+                _this5.ActiveType("source");
               case 3:
               case "end":
                 return _context5.stop();
@@ -243,14 +235,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['province', 'mun_one', "mun_two", "name", "source"]))
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(["province", "mun_one", "mun_two", "name", "activeType"])), {}, {
+    ACTIVE_PROVINCE: {
+      get: function get() {
+        return this.$store.getters.ACTIVE_PROVINCE;
+      },
+      set: function set(value) {
+        this.$store.commit('setActiveProvince', value);
+      }
+    },
+    ACTIVE_MUNONE: {
+      get: function get() {
+        return this.$store.getters.ACTIVE_MUNONE;
+      },
+      set: function set(value) {
+        this.$store.commit('setActiveMunOne', value);
+      }
+    },
+    ACTIVE_MUNTWO: {
+      get: function get() {
+        return this.$store.getters.ACTIVE_MUNTWO;
+      },
+      set: function set(value) {
+        this.$store.commit('setActiveMunTwo', value);
+      }
+    },
+    ACTIVE_NAME: {
+      get: function get() {
+        return this.$store.getters.ACTIVE_NAME;
+      },
+      set: function set(value) {
+        this.$store.commit('setActiveName', value);
+      }
+    }
+  })
 });
 
 /***/ }),
 
-/***/ "./resources/js/components/search/Form.vue":
+/***/ "./resources/js/components/Search/Form.vue":
 /*!*************************************************!*\
-  !*** ./resources/js/components/search/Form.vue ***!
+  !*** ./resources/js/components/Search/Form.vue ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -258,8 +283,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Form_vue_vue_type_template_id_d06eeb20_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form.vue?vue&type=template&id=d06eeb20&scoped=true& */ "./resources/js/components/search/Form.vue?vue&type=template&id=d06eeb20&scoped=true&");
-/* harmony import */ var _Form_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.vue?vue&type=script&lang=js& */ "./resources/js/components/search/Form.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Form_vue_vue_type_template_id_5c5b4250_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form.vue?vue&type=template&id=5c5b4250&scoped=true& */ "./resources/js/components/Search/Form.vue?vue&type=template&id=5c5b4250&scoped=true&");
+/* harmony import */ var _Form_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.vue?vue&type=script&lang=js& */ "./resources/js/components/Search/Form.vue?vue&type=script&lang=js&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -270,25 +295,25 @@ __webpack_require__.r(__webpack_exports__);
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _Form_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Form_vue_vue_type_template_id_d06eeb20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Form_vue_vue_type_template_id_d06eeb20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _Form_vue_vue_type_template_id_5c5b4250_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Form_vue_vue_type_template_id_5c5b4250_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  "d06eeb20",
+  "5c5b4250",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/search/Form.vue"
+component.options.__file = "resources/js/components/Search/Form.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/search/Form.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/Search/Form.vue?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
-  !*** ./resources/js/components/search/Form.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/Search/Form.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -296,30 +321,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Form.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/Form.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Form.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Search/Form.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/search/Form.vue?vue&type=template&id=d06eeb20&scoped=true&":
+/***/ "./resources/js/components/Search/Form.vue?vue&type=template&id=5c5b4250&scoped=true&":
 /*!********************************************************************************************!*\
-  !*** ./resources/js/components/search/Form.vue?vue&type=template&id=d06eeb20&scoped=true& ***!
+  !*** ./resources/js/components/Search/Form.vue?vue&type=template&id=5c5b4250&scoped=true& ***!
   \********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_template_id_d06eeb20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_template_id_d06eeb20_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_template_id_5c5b4250_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_template_id_5c5b4250_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_template_id_d06eeb20_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Form.vue?vue&type=template&id=d06eeb20&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/Form.vue?vue&type=template&id=d06eeb20&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_vue_vue_type_template_id_5c5b4250_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Form.vue?vue&type=template&id=5c5b4250&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Search/Form.vue?vue&type=template&id=5c5b4250&scoped=true&");
 
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/Form.vue?vue&type=template&id=d06eeb20&scoped=true&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Search/Form.vue?vue&type=template&id=5c5b4250&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/search/Form.vue?vue&type=template&id=d06eeb20&scoped=true& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Search/Form.vue?vue&type=template&id=5c5b4250&scoped=true& ***!
   \***********************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -339,7 +364,7 @@ var render = function () {
       on: {
         submit: function ($event) {
           $event.preventDefault()
-          return _vm.setSource.apply(null, arguments)
+          return _vm.findSource.apply(null, arguments)
         },
       },
     },
@@ -354,22 +379,22 @@ var render = function () {
           "auto-select-first": "",
           outlined: "",
           clearable: "",
-          label: "Субъекты РФ",
+          label: "Субъект федерации",
           items: _vm.province,
           "item-text": "name",
           "item-value": "id",
         },
         on: {
           "click:clear": function ($event) {
-            _vm.setProvince(), _vm.clear("province")
+            _vm.findProvince(), _vm.clear("province")
           },
         },
         model: {
-          value: _vm.source_rules.province,
+          value: _vm.ACTIVE_PROVINCE,
           callback: function ($$v) {
-            _vm.$set(_vm.source_rules, "province", $$v)
+            _vm.ACTIVE_PROVINCE = $$v
           },
-          expression: "source_rules.province",
+          expression: "ACTIVE_PROVINCE",
         },
       }),
       _vm._v(" "),
@@ -380,22 +405,22 @@ var render = function () {
           outlined: "",
           clearable: "",
           label: "Муниципальные образования 1ого уровня",
-          disabled: !_vm.source_rules.province,
+          disabled: !_vm.ACTIVE_PROVINCE,
           items: _vm.mun_one,
           "item-text": "name",
           "item-value": "id",
         },
         on: {
           "click:clear": function ($event) {
-            _vm.setMunOne(), _vm.clear("mun_one")
+            _vm.findMunOne(), _vm.clear("mun-one")
           },
         },
         model: {
-          value: _vm.source_rules.mun_one,
+          value: _vm.ACTIVE_MUNONE,
           callback: function ($$v) {
-            _vm.$set(_vm.source_rules, "mun_one", $$v)
+            _vm.ACTIVE_MUNONE = $$v
           },
-          expression: "source_rules.mun_one",
+          expression: "ACTIVE_MUNONE",
         },
       }),
       _vm._v(" "),
@@ -406,22 +431,22 @@ var render = function () {
           outlined: "",
           clearable: "",
           label: "Муниципальные образования 2ого уровня",
-          disabled: !_vm.source_rules.mun_one,
+          disabled: !_vm.ACTIVE_MUNONE,
           items: _vm.mun_two,
           "item-text": "name",
           "item-value": "id",
         },
         on: {
           "click:clear": function ($event) {
-            _vm.setMunTwo(), _vm.clear("mun_two")
+            _vm.findMunTwo(), _vm.clear("mun-two")
           },
         },
         model: {
-          value: _vm.source_rules.mun_two,
+          value: _vm.ACTIVE_MUNTWO,
           callback: function ($$v) {
-            _vm.$set(_vm.source_rules, "mun_two", $$v)
+            _vm.ACTIVE_MUNTWO = $$v
           },
-          expression: "source_rules.mun_two",
+          expression: "ACTIVE_MUNTWO",
         },
       }),
       _vm._v(" "),
@@ -432,22 +457,22 @@ var render = function () {
           outlined: "",
           clearable: "",
           label: "Орган власти",
-          disabled: !_vm.source_rules.mun_one,
+          disabled: !_vm.ACTIVE_MUNONE,
           items: _vm.name,
           "item-text": "name",
           "item-value": "id",
         },
         on: {
           "click:clear": function ($event) {
-            _vm.setName(), _vm.clear("name")
+            _vm.findName(), _vm.clear("name")
           },
         },
         model: {
-          value: _vm.source_rules.name,
+          value: _vm.ACTIVE_NAME,
           callback: function ($$v) {
-            _vm.$set(_vm.source_rules, "name", $$v)
+            _vm.ACTIVE_NAME = $$v
           },
-          expression: "source_rules.name",
+          expression: "ACTIVE_NAME",
         },
       }),
       _vm._v(" "),

@@ -15,11 +15,10 @@ class SourceRulesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'=>new NameResource($this->name),
+            'province'=>new ProvinceResource($this->province),
             'mun_one'=>new MunOneResource($this->mun_one),
             'mun_two'=>new MunTwoResource($this->mun_two),
-            'province'=>new ProvinceResource($this->province),
-
+            'name'=>new NameResource($this->name),
         ];
 
     }

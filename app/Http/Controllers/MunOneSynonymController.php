@@ -56,9 +56,9 @@ class MunOneSynonymController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $munTwo)
     {
-        //
+        return $synonym;
     }
 
     /**
@@ -67,8 +67,8 @@ class MunOneSynonymController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($mun_one,MunOneSyn $synonym)
     {
-        //
+        $synonym->delete();
     }
 }

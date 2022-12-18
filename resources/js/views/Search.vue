@@ -7,33 +7,33 @@
                 md="6"
                 cols="12"
             >
-                <search-form
-                    @source_rules="setRules"
-                />
+                <search-form/>
             </v-col>
+
             <v-col
                 lg="8"
                 md="6"
                 cols="12"
             >
-                <search-table
-                @editItem="openSubject"
-                />
-                <v-btn
-                    v-if="!isProvinceOrSource"
-                    class="mt-7"
-                    outlined
-                    @click="openSubject('create')"
-                >
-                    <v-icon>
-                        mdi-plus-box
-                    </v-icon>
-                    Добавить субъект
-                </v-btn>
-                <dialog-subject
-                    v-model="dialogSubject"
-                    :method="method"
-                />
+                <search-table/>
+                <div class="action">
+
+                    <create-subject
+                        v-model="dialogCreateSub"
+                    />
+                    <v-btn
+                        v-if="!isProvinceOrSource"
+                        class="mt-7"
+                        outlined
+                        @click="dialogCreateSub=!dialogCreateSub"
+                    >
+                        <v-icon>
+                            mdi-plus-box
+                        </v-icon>
+                        Добавить субъект
+                    </v-btn>
+                </div>
+
             </v-col>
         </v-row>
     </v-container>
@@ -45,27 +45,17 @@ export default {
     name: "Search",
     data:()=>({
         source_rules:null,
-        dialogSubject:false,
-        dialogCreate:false,
-        editedSubject:{
-            name:null,
-            minD:null
-        },
-        defaultSubject:{
-            name:null,
-            minD:null
-        },
-        method:null,
+        dialogCreateSub:false,
+
     }),
     mounted() {
         this.setSource(null)
 
     },
     components:{
-        SearchForm:()=>import('../components/search/Form'),
-        SearchTable:()=>import('../components/search/Table'),
-        DialogSubject:()=>import('../components/form/DialogSubject'),
-        CreateSource:()=>import('../components/CreateSource')
+        searchTable:()=>import('../components/Search/Table'),
+        searchForm:()=>import('../components/Search/Form'),
+        createSubject:()=>import('../components/Source/CreateSubject'),
     },
     computed:{
         ...mapGetters(['province','mun_one',"mun_two","name","source","activeType"]),
@@ -75,16 +65,13 @@ export default {
     },
     methods:{
         ...mapMutations(["setSource"]),
-        openSubject(method,item){
-            this.editedSubject=item??this.defaultSubject
-            this.method=method
+        openSubject(){
             this.dialogSubject=true
         },
         setRules(val){
             this.source_rules=val
         }
     },
-
 }
 </script>
 

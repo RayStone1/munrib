@@ -20,6 +20,7 @@ class MunOneResource extends JsonResource
             'name'=>$this->name,
             'mind'=>$this->minD,
             'synonyms'=>new SynonymResource($this->synonyms),
+            'type'=>'mun-one'
         ];
     }
 }

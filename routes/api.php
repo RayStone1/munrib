@@ -30,11 +30,11 @@ use Illuminate\Support\Facades\Route;
 //});
 
 
-Route::resource('mun_one',MunOneController::class)->only(['show','index','store']);
-Route::resource('mun_one.synonym',MunOneSynonymController::class)->except(['edit','create'])->scoped();
+Route::resource('mun-one',MunOneController::class)->only(['show','index','store']);
+Route::resource('mun-one.synonym',MunOneSynonymController::class)->except(['edit','create'])->scoped();
 
-Route::resource('mun_two',MunTwoController::class)->only(['show','index','store']);
-Route::resource('mun_two.synonym',MunTwoSynonymController::class)->except(['edit','create'])->scoped();
+Route::resource('mun-two',MunTwoController::class)->only(['show','index','store','update']);
+Route::resource('mun-two.synonym',MunTwoSynonymController::class)->except(['edit','create'])->scoped();
 
 Route::resource('names',NameController::class)->only(['show','index','store']);
 Route::resource('names.synonym',NameSynonymController::class)->except(['edit','create'])->scoped();

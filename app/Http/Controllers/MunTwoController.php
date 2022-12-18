@@ -83,9 +83,10 @@ class MunTwoController extends Controller
      * @param  \App\Models\MunTwo  $munTwo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MunTwo $munTwo)
+    public function update(MunTwoRequest $request, MunTwo $munTwo)
     {
-        //
+        $data=$request->validated();
+        $munTwo->update($data);
     }
 
     /**

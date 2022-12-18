@@ -4,6 +4,7 @@ import Province from "./modules/province";
 import MunOne from "./modules/munone";
 import MunTwo from "./modules/muntwo";
 import Name from "./modules/name";
+import Search from "./modules/search";
 import Source from "./modules/source";
 import typeSubject from "./modules/typeSubject";
 
@@ -12,11 +13,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules:{
+        Search,
+        Source,
+        typeSubject,
         Province,
         MunOne,
         MunTwo,
         Name,
-        Source,
-        typeSubject,
     }
 })

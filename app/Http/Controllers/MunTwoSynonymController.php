@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MunTwoRequest;
 use App\Http\Requests\SynonymRequest;
 use App\Http\Resources\SynonymResource;
 use App\Models\MunTwo;
@@ -55,9 +56,10 @@ class MunTwoSynonymController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MunTwoRequest $request,MunTwo $mun_two,MunTwoSyn $synonym)
     {
-        //
+        $data=$request->validated();
+        $synonym->update($data);
     }
 
     /**
@@ -66,8 +68,8 @@ class MunTwoSynonymController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($mun_two,MunTwoSyn $synonym)
     {
-        //
+        $synonym->delete();
     }
 }
